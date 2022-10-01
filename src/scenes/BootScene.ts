@@ -25,6 +25,8 @@ export default class BootScene extends Phaser.Scene {
 
         // LOAD assets HERE
         this.load.setPath('assets/images');
+        this.load.image('tiles16', 'tiles16.png');
+        this.load.image('tiles8', 'tiles8.png');
         this.load.atlas('game', 'game.png', 'game.json');
         this.load.image('background', 'background_cut.png');
 

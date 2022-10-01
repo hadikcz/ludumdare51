@@ -22,8 +22,8 @@ const config = {
         fps: 60,
         default: 'arcade',
         arcade: {
-            debug: true,
-            gravity: { y: 200 }
+            debug: false,
+            gravity: { y: 0 }
         }
     },
     disableContextMenu: !__DEV__,

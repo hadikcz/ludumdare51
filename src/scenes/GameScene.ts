@@ -1,7 +1,10 @@
 import GameConfig from 'config/GameConfig';
-import Chicken from 'core/chicken/Chicken';
+import ChickenManager from 'core/chicken/ChickenManager';
+import MatrixWorld from 'core/pathfinding/MatrixWorld';
+import dat, { GUI } from 'dat.gui';
 import EffectManager from 'effects/EffectManager';
 import { Depths } from 'enums/Depths';
+import $ from 'jquery';
 import Phaser from 'phaser';
 import UI from 'ui/UI';
 
@@ -10,11 +13,20 @@ declare let __DEV__: any;
 
 export default class GameScene extends Phaser.Scene {
 
+    public static readonly WORLD_COORDS = { // 36 76 600 311
+        x1: 36,
+        y1: 76,
+        x2: 600,
+        y2: 311
+    };
+
     public effectManager!: EffectManager;
     public ui!: UI;
-    private testEntity!: Phaser.GameObjects.Image;
     private controls!: Phaser.Cameras.Controls.SmoothedKeyControl;
-    private chickens!: Phaser.GameObjects.Group;
+    public matrixWorld!: MatrixWorld;
+    private debugGui!: GUI;
+    private debugPathLines!: Phaser.GameObjects.Group;
+    private chickenManager!: ChickenManager;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -22,58 +34,61 @@ export default class GameScene extends Phaser.Scene {
 
     create (): void {
         window.scene = this;
+        this.debugPathLines = this.add.group();
+        this.initDebugUI();
+        this.matrixWorld = new MatrixWorld(this, this.debugGui);
+
         this.cameras.main.setZoom(2);
         this.cameras.main.setBackgroundColor('#00');
         this.cameras.main.centerOn(GameConfig.PhaserBasicSettings.gameSize.width / 4, GameConfig.PhaserBasicSettings.gameSize.height / 4);
 
         this.effectManager = new EffectManager(this);
 
-        // this.testEntity = this.add.image(100, 100, 'test');
         this.add.image(0, 0, 'background')
             .setOrigin(0, 0)
             .setDepth(Depths.BG_TEXTURE);
 
 
-
-        this.chickens = this.add.group();
-        let chicken = new Chicken(this, 300, 100);
-        this.chickens.add(chicken);
-
-
-        this.time.addEvent({
-            repeat: Infinity,
-            delay: 1000,
-            callbackScope: this,
-            callback: () => {
-                // @ts-ignore
-                this.chickens.getChildren().forEach((chicken: Chicken) => {
-                    chicken.cycle();
-                });
-            }
-        });
-
-        this.time.addEvent({
-            repeat: Infinity,
-            delay: 10000,
-            callbackScope: this,
-            callback: () => {
-                // @ts-ignore
-                this.chickens.getChildren().forEach((chicken: Chicken) => {
-                    chicken.every10Seconds();
-                });
-            }
-        });
+        this.chickenManager = new ChickenManager(this);
 
 
 
         // this.startCameraControls();
 
+
         // this.ui = new UI(this);
+
     }
 
     update (time, delta): void {
         if (this.controls) {
             this.controls.update(delta);
+        }
+        this.matrixWorld.update();
+    }
+
+    private initDebugUI (): void {
+        this.debugGui = new dat.GUI({ autoPlace: false });
+        $('#datGui').append(this.debugGui.domElement);
+        // $('#datGui').hide();
+
+        let camera = this.debugGui.addFolder('Camera');
+        camera.add(this.cameras.main, 'zoom').step(1).listen();
+        camera.add(this.input.activePointer, 'worldX').step(1).listen();
+        camera.add(this.input.activePointer, 'worldY').step(1).listen();
+        camera.open();
+
+        this.debugGui.close();
+    }
+
+    public debugPath (points: Vector2[]): void {
+        this.debugPathLines.clear(true);
+        for (let i: number = 0; i < points.length; i++) {
+            if (points[i + 1] === undefined) break;
+            let a = points[i];
+            let b = points[i + 1];
+            let line = this.add.line(0, 0, a.x, a.y, b.x, b.y, 0x0000FF).setOrigin(0, 0);
+            this.debugPathLines.add(line);
         }
     }
 
