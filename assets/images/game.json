@@ -1,0 +1,440 @@
+{
+	"textures": [
+		{
+			"image": "game.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 161,
+				"h": 161
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "egg_small",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 5,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 5,
+						"h": 7
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 5,
+						"h": 7
+					}
+				},
+				{
+					"filename": "egg",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 6,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 6,
+						"h": 8
+					},
+					"frame": {
+						"x": 5,
+						"y": 0,
+						"w": 6,
+						"h": 8
+					}
+				},
+				{
+					"filename": "egg_small_selection",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 9
+					},
+					"frame": {
+						"x": 11,
+						"y": 0,
+						"w": 7,
+						"h": 9
+					}
+				},
+				{
+					"filename": "egg_selection",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 10
+					},
+					"frame": {
+						"x": 18,
+						"y": 0,
+						"w": 8,
+						"h": 10
+					}
+				},
+				{
+					"filename": "chicken_baby_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 9
+					},
+					"frame": {
+						"x": 26,
+						"y": 0,
+						"w": 10,
+						"h": 9
+					}
+				},
+				{
+					"filename": "chicken_orange_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 36,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "chicken_black_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 48,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "chicken_white_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 60,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "well",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 36
+					},
+					"frame": {
+						"x": 72,
+						"y": 0,
+						"w": 42,
+						"h": 36
+					}
+				},
+				{
+					"filename": "feeder_food_5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 114,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 0,
+						"y": 36,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 36,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 94,
+						"y": 36,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 0,
+						"y": 61,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 61,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 61,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 94,
+						"y": 61,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 0,
+						"y": 86,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 86,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "chicken_coop",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 57,
+						"h": 69
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 57,
+						"h": 69
+					},
+					"frame": {
+						"x": 94,
+						"y": 86,
+						"w": 57,
+						"h": 69
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a42b82a7f62f1cf4d1c11c3c3ba2509f:150f29fc33cece3e6d1ef2230efb2688:fc2835210f98bae8e8c1b7f0a84c9321$"
+	}
+}
