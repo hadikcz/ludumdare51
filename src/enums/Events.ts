@@ -1,3 +1,4 @@
 export enum Events {
     COINS_UPDATED = 'COINS_UPDATED',
+    CANCEL_BUILDING = 'CANCEL_BUILDING'
 }

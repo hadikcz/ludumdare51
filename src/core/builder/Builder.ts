@@ -2,23 +2,33 @@ import { Buildings } from 'core/builder/Buildings';
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
 import { FeederType } from 'core/feeders/Feeder';
 import { Depths } from 'enums/Depths';
+import { Events } from 'enums/Events';
+import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
 
 export default class Builder {
 
     private buildMode: Buildings|null = null;
+    public buildModeRunning$: Subject<boolean>;
     private previewImage: Phaser.GameObjects.Image;
     private canPlace: boolean = false;
 
     constructor (
         public scene: GameScene
     ) {
+        this.buildModeRunning$ = new Subject<boolean>();
+        this.buildModeRunning$.next(this.isBuildMode());
+
         this.previewImage = this.scene.add.image(-1000, -1000, 'game', 'egg')
             .setDepth(Depths.BUILD_ICON).setVisible(false);
 
         this.scene.input.on('pointerdown', (pointer, obj) => {
             if (!this.isBuildMode()) return;
             this.finishBuilding(pointer.worldX, pointer.worldY);
+        });
+
+        this.scene.events.on(Events.CANCEL_BUILDING, () => {
+            this.cancelBuilding();
         });
     }
 
@@ -57,6 +67,7 @@ export default class Builder {
         this.previewImage.setFrame(frame);
         console.log('start build');
         this.buildMode = building;
+        this.buildModeRunning$.next(this.isBuildMode());
     }
 
     private finishBuilding (x: number, y: number): void {
@@ -79,6 +90,14 @@ export default class Builder {
                 FeederType.DRINK
             );
         }
+
+        this.cancelBuilding();
+    }
+
+    private cancelBuilding (): void {
+        this.buildMode = null;
+        this.buildModeRunning$.next(this.isBuildMode());
+        this.previewImage.setPosition(-100, -100).setVisible(false);
     }
 
     private canPlaceIntersectionCheck (): boolean {

@@ -34,7 +34,7 @@ export default class GameScene extends Phaser.Scene {
     public eggManager!: EggManager;
     public shop!: Shop;
     public feederManager!: FeederManager;
-    private builder!: Builder;
+    public builder!: Builder;
 
     constructor () {
         super({ key: 'GameScene' });
