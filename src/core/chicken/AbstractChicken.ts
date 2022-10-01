@@ -4,6 +4,7 @@ import Vector2Like = Phaser.Types.Math.Vector2Like;
 import TransformHelpers from 'helpers/TransformHelpers';
 import Vector2 = Phaser.Math.Vector2;
 import { Vec2 } from 'types/Vec2';
+import Sprite = Phaser.GameObjects.Sprite;
 
 export default class AbstractChicken extends Phaser.GameObjects.Container {
 
@@ -34,7 +35,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         this.start();
     }
 
-    preUpdate (): void {
+    preUpdate (anitmationImage: Sprite|undefined): void {
         if (this.isDead) {
             return;
         }
@@ -44,6 +45,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
 
         this.move();
+
+        if (anitmationImage) {
+            if (this.body.velocity.x < 0) {
+                anitmationImage.setScale(-1, 1);
+            } else if (this.body.velocity.x > 0) {
+                anitmationImage.setScale(1, 1);
+            }
+        }
     }
 
     private async start (): Promise<void> {

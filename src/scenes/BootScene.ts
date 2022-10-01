@@ -30,10 +30,11 @@ export default class BootScene extends Phaser.Scene {
         this.load.atlas('game', 'game.png', 'game.json');
         this.load.image('background', 'background_cut.png');
 
-        this.load.image('chicken_orange', 'chicken_orange.png');
-        this.load.image('chicken_white', 'chicken_white.png');
-        this.load.image('chicken_black', 'chicken_black.png');
-        this.load.image('chicken_baby', 'chicken_baby.png');
+        const settings = { frameWidth: 16, frameHeight: 16 };
+        this.load.spritesheet('chicken_orange', 'chicken_orange.png', settings);
+        this.load.spritesheet('chicken_white', 'chicken_white.png', settings);
+        this.load.spritesheet('chicken_black', 'chicken_black.png', settings);
+        this.load.spritesheet('chicken_baby', 'chicken_baby.png', settings);
     }
 
     private startGame (): void {
