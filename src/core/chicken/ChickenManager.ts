@@ -1,3 +1,4 @@
+import BabyChicken from 'core/chicken/BabyChicken';
 import Chicken from 'core/chicken/Chicken';
 import Phaser from 'phaser';
 import GameScene from 'scenes/GameScene';
@@ -5,12 +6,14 @@ import GameScene from 'scenes/GameScene';
 export default class ChickenManager {
 
     private chickens: Phaser.GameObjects.Group;
+    private babyChickens: Phaser.GameObjects.Group;
 
     constructor (
         private scene: GameScene
     ) {
 
         this.chickens = this.scene.add.group();
+        this.babyChickens = this.scene.add.group();
 
         this.startTimers();
 
@@ -22,6 +25,11 @@ export default class ChickenManager {
         this.chickens.add(chicken);
     }
 
+    spawnBabyChicken (x: number, y: number): void {
+        const babyChicken = new BabyChicken(this.scene, x, y);
+        this.babyChickens.add(babyChicken);
+    }
+
     private startTimers (): void {
         this.scene.time.addEvent({
             repeat: Infinity,
@@ -30,6 +38,10 @@ export default class ChickenManager {
             callback: () => {
                 // @ts-ignore
                 this.chickens.getChildren().forEach((chicken: Chicken) => {
+                    chicken.cycle();
+                });
+                // @ts-ignore
+                this.babyChickens.getChildren().forEach((chicken: BabyChicken) => {
                     chicken.cycle();
                 });
             }

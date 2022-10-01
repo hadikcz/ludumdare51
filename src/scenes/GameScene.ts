@@ -1,5 +1,6 @@
 import GameConfig from 'config/GameConfig';
 import ChickenManager from 'core/chicken/ChickenManager';
+import EggManager from 'core/chicken/EggManager';
 import MatrixWorld from 'core/pathfinding/MatrixWorld';
 import dat, { GUI } from 'dat.gui';
 import EffectManager from 'effects/EffectManager';
@@ -26,7 +27,8 @@ export default class GameScene extends Phaser.Scene {
     public matrixWorld!: MatrixWorld;
     private debugGui!: GUI;
     private debugPathLines!: Phaser.GameObjects.Group;
-    private chickenManager!: ChickenManager;
+    public chickenManager!: ChickenManager;
+    public eggManager!: EggManager;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -50,6 +52,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         this.chickenManager = new ChickenManager(this);
+        this.eggManager = new EggManager(this);
 
 
 
