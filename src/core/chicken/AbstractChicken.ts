@@ -1,9 +1,9 @@
+import { ChickenAiStates } from 'core/chicken/ChickenAiStates';
 import { Depths } from 'enums/Depths';
-import GameScene from 'scenes/GameScene';
-import Vector2Like = Phaser.Types.Math.Vector2Like;
 import TransformHelpers from 'helpers/TransformHelpers';
-import Vector2 = Phaser.Math.Vector2;
+import GameScene from 'scenes/GameScene';
 import { Vec2 } from 'types/Vec2';
+import Vector2 = Phaser.Math.Vector2;
 import Sprite = Phaser.GameObjects.Sprite;
 
 export default class AbstractChicken extends Phaser.GameObjects.Container {
@@ -18,6 +18,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private hunger: number = 50;
     private thirst: number = 50;
 
+    protected aiState!: ChickenAiStates;
+
     constructor (scene: GameScene, x: number, y: number) {
         super(scene, x, y, []);
 
@@ -31,7 +33,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         this.setDepth(Depths.CHICKEN);
 
-
+        this.setState(ChickenAiStates.IDLING);
         this.start();
     }
 
@@ -52,6 +54,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             } else if (this.body.velocity.x > 0) {
                 anitmationImage.setScale(1, 1);
             }
+        }
+    }
+
+    private processAi (): void {
+        let body = this.body as Phaser.Physics.Arcade.Body;
+        if (this.aiState === ChickenAiStates.IDLING) {
+            body.setVelocity(0, 0);
+
         }
     }
 
@@ -100,6 +110,11 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     cycle (): void {
         this.processHungerAndThirst();
+    }
+
+    protected setAiState (aiState: ChickenAiStates): void {
+        console.log('changed state ' + aiState);
+        this.aiState = aiState;
     }
 
     private processHungerAndThirst (): void {
