@@ -5,10 +5,9 @@ import NumberHelpers from 'helpers/NumberHelpers';
 import GameScene from 'scenes/GameScene';
 
 export default class BabyChicken extends AbstractChicken {
-    private image: Phaser.GameObjects.Sprite;
 
     constructor (public scene: GameScene, x: number, y: number) {
-        super(scene, x, y);
+        super(scene, x, y, true);
 
         this.image = this.scene.add.sprite(0, 0, 'game', 'chicken_baby_static');
         this.add(this.image);

@@ -1,5 +1,8 @@
 import { ChickenAiStates } from 'core/chicken/ChickenAiStates';
+import { ChickenAnimations } from 'core/chicken/ChickenAnimations';
 import { Depths } from 'enums/Depths';
+import ChanceHelpers from 'helpers/ChanceHelpers';
+import NumberHelpers from 'helpers/NumberHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
 import { Vec2 } from 'types/Vec2';
@@ -13,6 +16,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     public scene!: GameScene;
     protected path: Vector2[] = [];
+    protected image!: Sprite;
 
     private isDead: boolean = false;
     private hunger: number = 50;
@@ -20,7 +24,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     protected aiState!: ChickenAiStates;
 
-    constructor (scene: GameScene, x: number, y: number) {
+    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false) {
         super(scene, x, y, []);
 
 
@@ -33,11 +37,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         this.setDepth(Depths.CHICKEN);
 
-        this.setState(ChickenAiStates.IDLING);
-        this.start();
+        // this.setAiState(ChickenAiStates.IDLING);
+        this.setAiState(ChickenAiStates.START_WANDERING);
     }
 
     preUpdate (anitmationImage: Sprite|undefined): void {
+        if (this.body === undefined || this.body.velocity === undefined) {
+            return;
+        }
         if (this.isDead) {
             return;
         }
@@ -46,37 +53,72 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             this.die();
         }
 
-        this.move();
 
         if (anitmationImage) {
+            if (this.body === undefined) {
+                return;
+            }
+
             if (this.body.velocity.x < 0) {
                 anitmationImage.setScale(-1, 1);
             } else if (this.body.velocity.x > 0) {
                 anitmationImage.setScale(1, 1);
             }
         }
+
+        this.processAi();
     }
 
-    private processAi (): void {
+    private async processAi (): Promise<void> {
+        console.log(this.aiState);
+
         let body = this.body as Phaser.Physics.Arcade.Body;
-        if (this.aiState === ChickenAiStates.IDLING) {
+        if (this.aiState === ChickenAiStates.START_IDLING) {
             body.setVelocity(0, 0);
 
+            this.image.play(ChickenAnimations.IDLING, true);
+
+            this.setAiState(ChickenAiStates.IDLING);
+
+            this.scene.time.delayedCall(
+                NumberHelpers.randomIntInRange(5000, 15000),
+                () => {this.stateAiEnds();},
+            );
+        }
+        if (this.aiState === ChickenAiStates.START_IDLING_LOOKING) {
+            body.setVelocity(0, 0);
+
+            this.image.play(ChickenAnimations.IDLING_LOOKING, true);
+
+            this.setAiState(ChickenAiStates.IDLING_LOOKING);
+
+            this.scene.time.delayedCall(
+                NumberHelpers.randomIntInRange(5000, 15000),
+                () => {this.stateAiEnds();},
+            );
+        }
+
+        if (this.aiState === ChickenAiStates.START_WANDERING) {
+            await this.findWanderingTarget();
+            this.image.play(ChickenAnimations.WALK, true);
+            this.setAiState(ChickenAiStates.WANDERING);
+        }
+
+        if (this.aiState === ChickenAiStates.WANDERING) {
+            this.move();
         }
     }
 
-    private async start (): Promise<void> {
-        let newWanderPoint = await this.getRandomWanderPoint();
-        if (newWanderPoint) {
-            this.scene.matrixWorld.findPath(this.x, this.y, 250, 250, (status, points) => {
-                if (status) {
-                    points.splice(0, 1);
-                    this.path = points;
-                }
-                if (this.scene.matrixWorld.isDebug()) {
-                    this.scene.debugPath(points);
-                }
-            }, true, this);
+    private stateAiEnds (): void {
+        if (this.aiState === ChickenAiStates.WANDERING) {
+            if (ChanceHelpers.percentage(50) && !this.isBaby) {
+                this.setAiState(ChickenAiStates.START_IDLING_LOOKING);
+            } else {
+                this.setAiState(ChickenAiStates.START_IDLING);
+            }
+
+        } else if (this.aiState === ChickenAiStates.IDLING || this.aiState === ChickenAiStates.IDLING_LOOKING) {
+            this.setAiState(ChickenAiStates.START_WANDERING);
         }
     }
 
@@ -91,20 +133,24 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             this.scene.physics.moveTo(this, currentTarget.x, currentTarget.y, 25);
         } else {
             body.setVelocity(0, 0);
-            let newWanderPoint = await this.getRandomWanderPoint();
-            if (newWanderPoint) {
-                this.scene.matrixWorld.findPath(this.x, this.y, newWanderPoint.x, newWanderPoint.y, (status, points) => {
-                    if (status) {
-                        points.splice(0, 1);
-                        this.path = points;
-                    }
-                    if (this.scene.matrixWorld.isDebug()) {
-                        this.scene.debugPath(points);
-                    }
-                }, true, this);
-            }
-            console.log('reach target');
+
+            this.stateAiEnds();
             // this.reachTarget();
+        }
+    }
+
+    private async findWanderingTarget (): Promise<void> {
+        let newWanderPoint = await this.getRandomWanderPoint();
+        if (newWanderPoint) {
+            this.scene.matrixWorld.findPath(this.x, this.y, newWanderPoint.x, newWanderPoint.y, (status, points) => {
+                if (status) {
+                    points.splice(0, 1);
+                    this.path = points;
+                }
+                if (this.scene.matrixWorld.isDebug()) {
+                    this.scene.debugPath(points);
+                }
+            }, true, this);
         }
     }
 
@@ -123,6 +169,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private die (): void {
+        console.log('die');
         this.destroy(true);
     }
 

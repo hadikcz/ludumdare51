@@ -8,7 +8,6 @@ import GameScene from 'scenes/GameScene';
 export default class Chicken extends AbstractChicken {
 
 
-    private image: Phaser.GameObjects.Sprite;
     private typeOfChicken: ChickenTypes;
 
     constructor (public scene: GameScene, x: number, y: number) {
@@ -40,18 +39,16 @@ export default class Chicken extends AbstractChicken {
         this.image.anims.create({
             key: ChickenAnimations.IDLING,
             frames: this.scene.anims.generateFrameNumbers('chicken_' + this.typeOfChicken, { frames: [12, 13] }),
-            frameRate: NumberHelpers.randomFloatInRange(0.8, 1),
+            frameRate: NumberHelpers.randomFloatInRange(2, 3),
             repeat: Infinity,
         });
 
         this.image.anims.create({
-            key: ChickenAnimations.IDLING,
+            key: ChickenAnimations.IDLING_LOOKING,
             frames: this.scene.anims.generateFrameNumbers('chicken_' + this.typeOfChicken, AnimationHelpers.getRangeAnimationObjectByRowAndLength(1, 2) ),
             frameRate: NumberHelpers.randomFloatInRange(0.5, 1),
             repeat: Infinity,
         });
-
-        this.image.play(ChickenAnimations.WALK);
     }
 
     preUpdate () {
@@ -59,7 +56,7 @@ export default class Chicken extends AbstractChicken {
     }
 
     every10Seconds (): void {
-        this.spawnEgg();
+        // this.spawnEgg();
     }
 
     private spawnEgg (): void {
