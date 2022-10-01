@@ -17,11 +17,3 @@
       }
     }
 </style>
-
-{#if visible}
-    <div class="example-bar">
-        <div class="inner">
-            {valueX}
-        </div>
-    </div>
-{/if}

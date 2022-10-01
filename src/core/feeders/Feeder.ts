@@ -1,6 +1,7 @@
+import { IBuildingBounds } from 'core/builder/IBuildingBounds';
 import GameScene from 'scenes/GameScene';
 
-export default class Feeder extends Phaser.GameObjects.Image {
+export default class Feeder extends Phaser.GameObjects.Image implements IBuildingBounds {
 
 
     private static readonly MAX_VALUE = 50;
@@ -10,7 +11,7 @@ export default class Feeder extends Phaser.GameObjects.Image {
         x: number,
         y: number,
         private typeOf: FeederType,
-        private amount: number = 5
+        private amount: number = 15
     ) {
         super(scene, x, y, 'game', 'feeder_water_1');
 
@@ -39,23 +40,27 @@ export default class Feeder extends Phaser.GameObjects.Image {
             image = 'feeder_water_';
         }
 
-        if (this.amount <= 50 && this.amount > 40) {
+        if (this.amount <= 50 && this.amount > 37.5) {
             image += 5;
-        } else if (this.amount <= 40 && this.amount > 30) {
+        } else if (this.amount <= 37.5 && this.amount > 25) {
             image += 4;
-        } else if (this.amount <= 30 && this.amount > 20) {
+        } else if (this.amount <= 25 && this.amount > 12.5) {
             image += 3;
-        } else if (this.amount <= 20 && this.amount > 10) {
+        } else if (this.amount <= 12.5 && this.amount > 0) {
             image += 2;
-        } else if (this.amount <= 10) {
+        } else if (this.amount <= 0) {
             image += 1;
         }
 
         this.setFrame(image);
     }
+
+    getImageBounds (): Phaser.Geom.Rectangle {
+        return this.getBounds();
+    }
 }
 
 export enum FeederType {
-    FOOD,
-    DRINK
+    FOOD = 'food',
+    DRINK = 'drink'
 }

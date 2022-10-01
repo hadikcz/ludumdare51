@@ -1,4 +1,5 @@
 import GameConfig from 'config/GameConfig';
+import Builder from 'core/builder/Builder';
 import ChickenManager from 'core/chicken/ChickenManager';
 import EggManager from 'core/chicken/EggManager';
 import FeederManager from 'core/feeders/FeederManager';
@@ -33,6 +34,7 @@ export default class GameScene extends Phaser.Scene {
     public eggManager!: EggManager;
     public shop!: Shop;
     public feederManager!: FeederManager;
+    private builder!: Builder;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -54,15 +56,13 @@ export default class GameScene extends Phaser.Scene {
             .setOrigin(0, 0)
             .setDepth(Depths.BG_TEXTURE);
 
+        this.shop = new Shop(this);
 
         this.chickenManager = new ChickenManager(this);
         this.eggManager = new EggManager(this);
-        this.feederManager = new FeederManager(this);
+        this.feederManager = new FeederManager(this, this.shop);
 
-        this.shop = new Shop(this);
-
-
-
+        this.builder = new Builder(this);
         // this.startCameraControls();
 
 
@@ -75,6 +75,7 @@ export default class GameScene extends Phaser.Scene {
             this.controls.update(delta);
         }
         this.matrixWorld.update();
+        this.builder.update();
     }
 
     private initDebugUI (): void {

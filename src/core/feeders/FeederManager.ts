@@ -3,18 +3,14 @@ import Shop from 'core/Shop';
 import GameScene from 'scenes/GameScene';
 
 export default class FeederManager {
-    private feeders: Phaser.GameObjects.Group;
-    private shop: Shop;
+    public readonly feeders: Phaser.GameObjects.Group;
 
     constructor (
-        public scene: GameScene
+        public scene: GameScene,
+        private shop: Shop
     ) {
 
-        this.shop = scene.shop;
         this.feeders = this.scene.add.group();
-
-
-        // new Feeder(this, 100, 100, FeederType.FOOD, 23);
     }
 
     purchaseFeeder (x: number, y: number, type: FeederType): void {
@@ -23,7 +19,7 @@ export default class FeederManager {
             return;
         }
 
-        let feeder = new Feeder(this.scene, x, y, type, 0);
+        let feeder = new Feeder(this.scene, x, y, type);
         this.feeders.add(feeder);
 
         this.shop.purchaseFeeder();

@@ -176,6 +176,15 @@ export default class MatrixWorld {
             return new Vector2(tile.getCenterX(), tile.getCenterY());
         }
         return null;
+    }
 
+    public isTileAvailable(x: number, y:number): boolean {
+        let tile = this.debugGridLayer.getTileAtWorldXY(x, y);
+
+        if (!tile) {
+            return false;
+        }
+
+        return tile.index === 1;
     }
 }
