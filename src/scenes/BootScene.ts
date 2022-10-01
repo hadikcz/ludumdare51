@@ -24,7 +24,14 @@ export default class BootScene extends Phaser.Scene {
         }, this);
 
         // LOAD assets HERE
-        this.load.image('test', 'assets/images/switch.png');
+        this.load.setPath('assets/images');
+        this.load.atlas('game', 'game.png', 'game.json');
+        this.load.image('background', 'background_cut.png');
+
+        this.load.image('chicken_orange', 'chicken_orange.png');
+        this.load.image('chicken_white', 'chicken_white.png');
+        this.load.image('chicken_black', 'chicken_black.png');
+        this.load.image('chicken_baby', 'chicken_baby.png');
     }
 
     private startGame (): void {
