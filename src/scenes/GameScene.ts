@@ -1,7 +1,9 @@
 import GameConfig from 'config/GameConfig';
 import ChickenManager from 'core/chicken/ChickenManager';
 import EggManager from 'core/chicken/EggManager';
+import FeederManager from 'core/feeders/FeederManager';
 import MatrixWorld from 'core/pathfinding/MatrixWorld';
+import Shop from 'core/Shop';
 import dat, { GUI } from 'dat.gui';
 import EffectManager from 'effects/EffectManager';
 import { Depths } from 'enums/Depths';
@@ -29,6 +31,8 @@ export default class GameScene extends Phaser.Scene {
     private debugPathLines!: Phaser.GameObjects.Group;
     public chickenManager!: ChickenManager;
     public eggManager!: EggManager;
+    public shop!: Shop;
+    public feederManager!: FeederManager;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -53,13 +57,16 @@ export default class GameScene extends Phaser.Scene {
 
         this.chickenManager = new ChickenManager(this);
         this.eggManager = new EggManager(this);
+        this.feederManager = new FeederManager(this);
+
+        this.shop = new Shop(this);
 
 
 
         // this.startCameraControls();
 
 
-        // this.ui = new UI(this);
+        this.ui = new UI(this);
 
     }
 

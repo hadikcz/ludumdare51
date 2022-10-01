@@ -3,10 +3,9 @@
 	import {onDestroy} from "svelte";
 	import './global.css';
 	import Hud from "ui/svelte/ingame/Hud/Hud.svelte";
+	import CoinBar from "ui/svelte/ingame/CoinBar.svelte";
 
     export let scene: GameScene;
-
-	console.log(scene.sys.isPaused());
 
 	onDestroy(() => {
 		console.log('main app svelte DESTYROYD');
@@ -18,4 +17,5 @@
 
 <main>
 	<Hud valueX="12" visible="{visibleHud}"></Hud>
+	<CoinBar scene="{scene}"></CoinBar>
 </main>

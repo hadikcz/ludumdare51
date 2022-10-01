@@ -70,8 +70,6 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private async processAi (): Promise<void> {
-        console.log(this.aiState);
-
         let body = this.body as Phaser.Physics.Arcade.Body;
         if (this.aiState === ChickenAiStates.START_IDLING) {
             body.setVelocity(0, 0);
