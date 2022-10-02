@@ -1,6 +1,8 @@
 export enum Depths {
     POND_WATER,
     BG_TEXTURE,
+    FEEDER,
+    EGG,
     COINS_SHADOW,
     COINS,
     CHICKEN,

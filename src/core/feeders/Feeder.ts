@@ -1,4 +1,5 @@
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
+import { Depths } from 'enums/Depths';
 import ArrayHelpers from 'helpers/ArrayHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
@@ -20,6 +21,8 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         super(scene, x, y, 'game', 'feeder_water_1');
 
         this.scene.add.existing(this);
+
+        this.setDepth(Depths.FEEDER);
 
         this.setInteractive({ useHandCursor: true });
         this.detectAndSetImage();

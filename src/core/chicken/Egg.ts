@@ -1,4 +1,5 @@
 import Coin from 'core/Coin';
+import { Depths } from 'enums/Depths';
 import NumberHelpers from 'helpers/NumberHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
@@ -14,6 +15,8 @@ export default class Egg extends Phaser.GameObjects.Image {
         super(scene, x, y, 'game', 'egg');
 
         this.scene.add.existing(this);
+
+        this.setDepth(Depths.EGG);
 
         // longer delay
         // after that born small baby chicken, which will wait 30-60 seconds before be big
