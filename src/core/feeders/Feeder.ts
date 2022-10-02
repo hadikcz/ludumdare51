@@ -42,6 +42,8 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
             return;
         }
         this.amount += 5;
+
+        this.detectAndSetImage();
     }
 
     canPurchaseFill (): boolean {
@@ -51,6 +53,7 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
     tryEat (): boolean {
         if (this.amount >= 1) {
             this.amount--;
+            this.detectAndSetImage();
             return true;
         }
 

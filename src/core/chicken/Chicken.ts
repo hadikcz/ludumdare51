@@ -10,8 +10,8 @@ export default class Chicken extends AbstractChicken {
 
     private typeOfChicken: ChickenTypes;
 
-    constructor (public scene: GameScene, x: number, y: number) {
-        super(scene, x, y);
+    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false) {
+        super(scene, x, y, false, isHomeless);
 
 
         this.typeOfChicken = GetRandomChickenType();
@@ -56,10 +56,12 @@ export default class Chicken extends AbstractChicken {
     }
 
     every10Seconds (): void {
-        // this.spawnEgg();
+        this.spawnEgg();
     }
 
     private spawnEgg (): void {
+        if (this.isHomeless) return;
+
         this.scene.eggManager.spawnEgg(this.x, this.y);
     }
 }

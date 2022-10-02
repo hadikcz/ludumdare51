@@ -6,14 +6,14 @@ import GameScene from 'scenes/GameScene';
 
 export default class BabyChicken extends AbstractChicken {
 
-    constructor (public scene: GameScene, x: number, y: number) {
-        super(scene, x, y, true);
+    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false) {
+        super(scene, x, y, true, isHomeless);
 
         this.image = this.scene.add.sprite(0, 0, 'game', 'chicken_baby_static');
         this.add(this.image);
 
         this.scene.time.addEvent({
-            delay: NumberHelpers.randomIntInRange(10000, 10000),
+            delay: NumberHelpers.randomIntInRange(15000, 35000),
             callbackScope: this,
             callback: this.bornChicken
         });

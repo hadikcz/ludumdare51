@@ -103,7 +103,6 @@ export default class Coin extends Image {
     }
 
     private click (): void {
-        if (!this.clickable) return;
         if (this.clicked) return;
 
         this.clicked = true;

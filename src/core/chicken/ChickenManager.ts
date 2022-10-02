@@ -10,6 +10,8 @@ export default class ChickenManager {
     private babyChickens: Phaser.GameObjects.Group;
     public readonly chickensCount$: Subject<number>;
     public readonly babyChickensCount$: Subject<number>;
+    public readonly maxChickenLimit$: Subject<number>;
+    public maxChickenLimit: number = 10;
 
     constructor (
         private scene: GameScene
@@ -19,16 +21,16 @@ export default class ChickenManager {
 
         this.chickensCount$ = new Subject<number>();
         this.babyChickensCount$ = new Subject<number>();
+        this.maxChickenLimit$ = new Subject<number>();
 
         this.startTimers();
 
         this.spawnChicken(300, 300);
-
-        this.chickens.on;
     }
 
     spawnChicken (x: number, y: number): void {
-        const chicken = new Chicken(this.scene, x, y);
+        let isHomeless = this.chickens.getChildren().length >= this.maxChickenLimit;
+        const chicken = new Chicken(this.scene, x, y, isHomeless);
         chicken.on('destroy', () => {
             this.chickensCount$.next(this.getChickenCount());
         });
@@ -38,7 +40,7 @@ export default class ChickenManager {
     }
 
     spawnBabyChicken (x: number, y: number): void {
-        const babyChicken = new BabyChicken(this.scene, x, y);
+        const babyChicken = new BabyChicken(this.scene, x, y, false);
         babyChicken.on('destroy', () => {
             this.babyChickensCount$.next(this.getBabyChickenCount());
         });
@@ -48,6 +50,10 @@ export default class ChickenManager {
 
     getChickenCount (): number {
         return this.chickens.getChildren().length;
+    }
+
+    getMaxChickenLimit (): number {
+        return this.maxChickenLimit;
     }
 
     getBabyChickenCount (): number {

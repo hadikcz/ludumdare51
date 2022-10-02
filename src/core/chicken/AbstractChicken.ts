@@ -22,14 +22,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     protected image!: Sprite;
 
     private isDead: boolean = false;
-    private hunger: number = 50;
-    private thirst: number = 30;
+    private hunger: number = 40;
+    private thirst: number = 50;
     private targetFeeder: Feeder|null = null;
 
     protected aiState!: ChickenAiStates;
     private bubbleImage: Phaser.GameObjects.Image;
 
-    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false) {
+    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false) {
         super(scene, x, y, []);
 
         this.scene.add.existing(this);
@@ -55,6 +55,17 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             duration: 500,
             scale: 1.1
         });
+
+
+        if (this.isHomeless) {
+            this.scene.time.addEvent({
+                delay: NumberHelpers.randomIntInRange(5000, 8000),
+                callbackScope: this,
+                callback: () => {
+                    this.die();
+                }
+            });
+        }
     }
 
     preUpdate (anitmationImage: Sprite|undefined): void {
@@ -69,13 +80,16 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             this.die();
         }
 
-        if (this.isHungry() && this.isThirsty()) {
+        if (this.isHomeless) {
+            this.bubbleImage.setVisible(true);
+            this.bubbleImage.setFrame('ui/bubble_no_house');
+        } else if (this.isHungry(true) && this.isThirsty(true)) {
             this.bubbleImage.setVisible(true);
             this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger');
-        } else if (this.isHungry()) {
+        } else if (this.isHungry(true)) {
             this.bubbleImage.setVisible(true);
             this.bubbleImage.setFrame('ui/bubble_hunger');
-        } else if (this.isThirsty()) {
+        } else if (this.isThirsty(true)) {
             this.bubbleImage.setVisible(true);
             this.bubbleImage.setFrame('ui/bubble_thirst');
         } else {
@@ -207,11 +221,11 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         if (
             this.aiState === ChickenAiStates.GOING_TO_EAT
-            || this.aiState === ChickenAiStates.GO_TO_DRINK
+            || this.aiState === ChickenAiStates.GOING_TO_DRINK
         ) {
             if (this.aiState === ChickenAiStates.GOING_TO_EAT) {
                 this.setAiState(ChickenAiStates.START_EATING);
-            } else if (this.aiState === ChickenAiStates.GO_TO_DRINK) {
+            } else if (this.aiState === ChickenAiStates.GOING_TO_DRINK) {
                 this.setAiState(ChickenAiStates.START_DRINKING);
             }
 
@@ -281,6 +295,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         } else {
             body.setVelocity(0, 0);
 
+            // console.log('reach target');
             this.stateAiEnds();
             // this.reachTarget();
         }
@@ -315,7 +330,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     protected setAiState (aiState: ChickenAiStates): void {
-        console.log('changed state ' + aiState);
+        // console.log('changed state ' + aiState);
         this.aiState = aiState;
     }
 
@@ -362,7 +377,6 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
             if (await this.scene.matrixWorld.canMoveTo(this.x, this.y, randomPoint.x, randomPoint.y)) {
                 console.log('wander point');
-                console.log(randomPoint);
                 return randomPoint;
             }
         }
@@ -370,12 +384,18 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         return null;
     }
 
-    private isHungry (): boolean {
-        return this.hunger <= 25;
+    private isHungry (deadly = false): boolean {
+        if (deadly) {
+            return this.hunger <= 18;
+        }
+        return this.hunger <= 35;
     }
 
-    private isThirsty (): boolean {
-        return this.thirst <= 25;
+    private isThirsty (deadly = false): boolean {
+        if (deadly) {
+            return this.thirst <= 18;
+        }
+        return this.thirst <= 35;
     }
 
     private setPath (path: Vector2[]): void {
