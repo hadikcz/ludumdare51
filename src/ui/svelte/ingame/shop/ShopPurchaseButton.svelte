@@ -36,6 +36,10 @@
         display: block;
       }
 
+        .purchase-button:hover {
+          filter: sepia(1);
+        }
+
       .purchase-button.notEnoughCoins {
         filter: grayscale(0.75);
       }

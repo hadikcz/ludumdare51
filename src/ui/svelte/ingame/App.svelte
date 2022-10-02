@@ -8,6 +8,7 @@
 	import ChickenBar from "ui/svelte/ingame/ChickenBar.svelte";
 	import BabyChickenBar from "ui/svelte/ingame/BabyChickenBar.svelte";
 	import Shop from "ui/svelte/ingame/shop/Shop.svelte";
+	import FeederModal from "ui/svelte/ingame/modals/FeederModal.svelte";
 
     export let scene: GameScene;
 
@@ -39,4 +40,6 @@
 	</div>
 	<BuildingInfo scene="{scene}"></BuildingInfo>
 	<Shop scene="{scene}"></Shop>
+
+	<FeederModal scene="{scene}"></FeederModal>
 </main>
