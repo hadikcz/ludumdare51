@@ -33,6 +33,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private bubbleImage: Phaser.GameObjects.Image;
     private dieTimer: Phaser.Time.TimerEvent|null = null;
     private bubbleOffest: { x: number; y: number };
+    // private shadow: Phaser.GameObjects.Arc;
+    // private shadowYOffeste: number;
 
     constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false, public chickenName: string) {
         super(scene, x, y, []);
@@ -79,6 +81,13 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                 }
             });
         }
+        //
+        // this.shadowYOffeste = 4;
+        // let size = 3;
+        // if (this.isBaby) {
+        //     size = 2;
+        // }
+        // this.shadow = this.scene.add.circle(this.x, this.y + this.shadowYOffeste, size, 0x000000, 0.15).setDepth(Depths.CHICKEN_SHADOW);
     }
 
     init (): void {
@@ -99,6 +108,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         let pointer = this.scene.input.activePointer;
         let distance = TransformHelpers.getDistanceBetween(pointer.worldX, pointer.worldY, this.x, this.y);
 
+        // this.shadow.setPosition(this.x, this.y + this.shadowYOffeste);
         if (this.image) {
             if (distance < 10) {
                 this.image.setTint(0xFFFF00);
@@ -459,6 +469,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     destroy (fromScene?: boolean) {
         this.bubbleImage.destroy(fromScene);
+        // this.shadow.destroy(fromScene);
         super.destroy(fromScene);
     }
 
