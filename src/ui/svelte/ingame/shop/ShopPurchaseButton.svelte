@@ -8,6 +8,7 @@
     export let price: number;
     export let icon: string;
     export let type: Buildings;
+    export let smallPriceSize: boolean = false;
 
     function tryPurchase(): void {
         events.emit(Events.UI_SHOP_TRY_PURCHASE, type);
@@ -47,13 +48,17 @@
       .price.notEnoughCoins {
         color: #ff6060;
       }
+
+    .price.small {
+      font-size: 12px;
+    }
   }
 </style>
 
 <div class="shop-item">
     <div class="sprite shop-purchase_button_{icon} purchase-button {price > coins ? 'notEnoughCoins' : ''}" on:click={tryPurchase}></div>
     <div class="price-row">
-        <div class="price {price > coins ? 'notEnoughCoins' : ''}">
+        <div class="price {price > coins ? 'notEnoughCoins' : ''} {smallPriceSize ? 'small' : ''}">
             {price}
         </div>
         <div class="sprite coin_bar_icon"></div>

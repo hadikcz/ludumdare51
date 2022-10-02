@@ -37,6 +37,6 @@
         <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.FEEDER_PRICE_FOOD}" icon="feeder_food" type="{Buildings.FEEDER_FOOD}"></ShopPurchaseButton>
         <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.FEEDER_PRICE_WATER}" icon="feeder_water" type="{Buildings.FEEDER_WATER}"></ShopPurchaseButton>
         <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.CHICKEN_HOUSE_PRICE}" icon="chicken_house" type="{Buildings.CHICKEN_HOUSE}"></ShopPurchaseButton>
-        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.WELL_PRICE}" icon="well" type="{Buildings.WELL}"></ShopPurchaseButton>
+        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.WELL_PRICE}" icon="well" type="{Buildings.WELL}" smallPriceSize="true"></ShopPurchaseButton>
     </div>
 </div>
