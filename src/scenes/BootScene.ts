@@ -28,7 +28,8 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('tiles16', 'tiles16.png');
         this.load.image('tiles8', 'tiles8.png');
         this.load.atlas('game', 'game.png', 'game.json');
-        this.load.image('background', 'background_cut.png');
+        this.load.image('background', 'background_cut_water_hole.png');
+        this.load.image('water', 'water.png');
 
         const settings = { frameWidth: 16, frameHeight: 16 };
         this.load.spritesheet('chicken_orange', 'chicken_orange.png', settings);

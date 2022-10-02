@@ -6,9 +6,9 @@ import EggManager from 'core/chicken/EggManager';
 import FeederManager from 'core/feeders/FeederManager';
 import MatrixWorld from 'core/pathfinding/MatrixWorld';
 import Shop from 'core/Shop';
+import WorldEnv from 'core/WorldEnv';
 import dat, { GUI } from 'dat.gui';
 import EffectManager from 'effects/EffectManager';
-import { Depths } from 'enums/Depths';
 import $ from 'jquery';
 import Phaser from 'phaser';
 import UI from 'ui/UI';
@@ -37,6 +37,7 @@ export default class GameScene extends Phaser.Scene {
     public feederManager!: FeederManager;
     public builder!: Builder;
     public buildingManager!: BuildingsManager;
+    private worldEnv!: WorldEnv;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -46,6 +47,8 @@ export default class GameScene extends Phaser.Scene {
         window.scene = this;
         this.debugPathLines = this.add.group();
         this.initDebugUI();
+
+        this.worldEnv = new WorldEnv(this);
         this.matrixWorld = new MatrixWorld(this, this.debugGui);
 
         this.cameras.main.setZoom(2);
@@ -54,9 +57,6 @@ export default class GameScene extends Phaser.Scene {
 
         this.effectManager = new EffectManager(this);
 
-        this.add.image(0, 0, 'background')
-            .setOrigin(0, 0)
-            .setDepth(Depths.BG_TEXTURE);
 
         this.shop = new Shop(this);
 
