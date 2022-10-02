@@ -71,7 +71,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         if (this.isHungry() && this.isThirsty()) {
             this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_thirsty_and_hunger');
+            this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger');
         } else if (this.isHungry()) {
             this.bubbleImage.setVisible(true);
             this.bubbleImage.setFrame('ui/bubble_hunger');

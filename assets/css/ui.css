@@ -1,0 +1,19 @@
+/* -----------------------------------------------------
+   created with https://www.codeandweb.com/texturepacker 
+   -----------------------------------------------------
+   $TexturePacker:SmartUpdate:1e6e78564e8119387123caf9cdd9b99c:a0eea69994d4e2a75202bbbc7b76c325:4c7ccf045e54e36629c6cbec5cb72956$
+   -----------------------------------------------------
+
+   usage: <span class="{-spritename-} sprite"></span>
+
+   replace {-spritename-} with the sprite you like to use
+
+*/
+
+.sprite {display:inline-block; overflow:hidden; background-repeat: no-repeat;background-image:url(ui.png);}
+
+.baby_chicken_bar {width:94px; height:34px; background-position: -1px -1px}
+.chicken_bar {width:94px; height:34px; background-position: -97px -1px}
+.coin_bar {width:94px; height:34px; background-position: -193px -1px}
+.coin_bar_icon {width:18px; height:20px; background-position: -385px -1px}
+.empty_bar {width:94px; height:34px; background-position: -289px -1px}
