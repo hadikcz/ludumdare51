@@ -1,6 +1,7 @@
 import AbstractChicken from 'core/chicken/AbstractChicken';
 import BabyChicken from 'core/chicken/BabyChicken';
 import Chicken from 'core/chicken/Chicken';
+import ArrayHelpers from 'helpers/ArrayHelpers';
 import Phaser from 'phaser';
 import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
@@ -30,9 +31,12 @@ export default class ChickenManager {
         this.spawnChicken(300, 300);
     }
 
-    spawnChicken (x: number, y: number): void {
+    spawnChicken (x: number, y: number, name: string|null = null): void {
+        if (!name) {
+            name = this.getRandomName();
+        }
         let isHomeless = this.chickens.getChildren().length >= this.maxChickenLimit;
-        const chicken = new Chicken(this.scene, x, y, isHomeless);
+        const chicken = new Chicken(this.scene, x, y, isHomeless, name);
         chicken.on('destroy', () => {
             this.chickensCount$.next(this.getChickenCount());
         });
@@ -42,7 +46,8 @@ export default class ChickenManager {
     }
 
     spawnBabyChicken (x: number, y: number): void {
-        const babyChicken = new BabyChicken(this.scene, x, y, false);
+        let name = this.getRandomName();
+        const babyChicken = new BabyChicken(this.scene, x, y, false, name);
         babyChicken.on('destroy', () => {
             this.babyChickensCount$.next(this.getBabyChickenCount());
         });
@@ -125,5 +130,112 @@ export default class ChickenManager {
             }
         });
 
+    }
+
+    private getRandomName (): string {
+        let names = [
+            'Mary',
+            'Patricia',
+            'Jennifer',
+            'Linda',
+            'Elizabeth',
+            'Barbara',
+            'Susan',
+            'Jessica',
+            'Sarah',
+            'Karen',
+            'Lisa',
+            'Nancy',
+            'Betty',
+            'Margaret',
+            'Sandra',
+            'Ashley',
+            'Kimberly',
+            'Emily',
+            'Donna',
+            'Michelle',
+            'Carol',
+            'Amanda',
+            'Dorothy',
+            'Melissa',
+            'Deborah',
+            'Stephanie',
+            'Rebecca',
+            'Sharon',
+            'Laura',
+            'Cynthia',
+            'Kathleen',
+            'Amy',
+            'Angela',
+            'Shirley',
+            'Anna',
+            'Brenda',
+            'Pamela',
+            'Emma',
+            'Nicole',
+            'Helen',
+            'Samantha',
+            'Katherine',
+            'Christine',
+            'Debra',
+            'Rachel',
+            'Carolyn',
+            'Janet',
+            'Catherine',
+            'Maria',
+            'Heather',
+            'Diane',
+            'Ruth',
+            'Julie',
+            'Olivia',
+            'Joyce',
+            'Virginia',
+            'Victoria',
+            'Kelly',
+            'Lauren',
+            'Christina',
+            'Joan',
+            'Evelyn',
+            'Judith',
+            'Megan',
+            'Andrea',
+            'Cheryl',
+            'Hannah',
+            'Jacqueline',
+            'Martha',
+            'Gloria',
+            'Teresa',
+            'Ann',
+            'Sara',
+            'Madison',
+            'Frances',
+            'Kathryn',
+            'Janice',
+            'Jean',
+            'Abigail',
+            'Alice',
+            'Julia',
+            'Judy',
+            'Sophia',
+            'Grace',
+            'Denise',
+            'Amber',
+            'Doris',
+            'Marilyn',
+            'Danielle',
+            'Beverly',
+            'Isabella',
+            'Theresa',
+            'Diana',
+            'Natalie',
+            'Brittany',
+            'Charlotte',
+            'Marie',
+            'Kayla',
+            'Alexis',
+            'Lori',
+        ];
+
+        return ArrayHelpers.getRandomFromArray(names);
     }
 }

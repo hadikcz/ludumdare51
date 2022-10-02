@@ -10,8 +10,8 @@ export default class Chicken extends AbstractChicken {
 
     private typeOfChicken: ChickenTypes;
 
-    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false) {
-        super(scene, x, y, false, isHomeless);
+    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false, name: string) {
+        super(scene, x, y, false, isHomeless, name);
 
 
         this.typeOfChicken = GetRandomChickenType();
@@ -49,6 +49,8 @@ export default class Chicken extends AbstractChicken {
             frameRate: NumberHelpers.randomFloatInRange(0.5, 1),
             repeat: Infinity,
         });
+
+        this.init();
     }
 
     preUpdate () {
@@ -63,5 +65,7 @@ export default class Chicken extends AbstractChicken {
         if (this.isHomeless) return;
 
         this.scene.eggManager.spawnEgg(this.x, this.y);
+
+        this.spawnedEggs++;
     }
 }

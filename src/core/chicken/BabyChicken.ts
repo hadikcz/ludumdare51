@@ -6,8 +6,8 @@ import GameScene from 'scenes/GameScene';
 
 export default class BabyChicken extends AbstractChicken {
 
-    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false) {
-        super(scene, x, y, true, isHomeless);
+    constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false, name: string) {
+        super(scene, x, y, true, isHomeless, name);
 
         this.image = this.scene.add.sprite(0, 0, 'game', 'chicken_baby_static');
         this.add(this.image);
@@ -40,7 +40,9 @@ export default class BabyChicken extends AbstractChicken {
             repeat: Infinity
         });
 
-        this.image.play('eat');
+        this.image.play(ChickenAnimations.IDLING);
+
+        this.init();
     }
 
     preUpdate () {
@@ -48,7 +50,7 @@ export default class BabyChicken extends AbstractChicken {
     }
 
     private bornChicken (): void {
-        this.scene.chickenManager.spawnChicken(this.x, this.y);
+        this.scene.chickenManager.spawnChicken(this.x, this.y, this.chickenName);
         this.destroy(true);
     }
 }

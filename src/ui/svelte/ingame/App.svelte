@@ -10,6 +10,7 @@
 	import Shop from "ui/svelte/ingame/shop/Shop.svelte";
 	import FeederModal from "ui/svelte/ingame/modals/FeederModal.svelte";
 	import WellModal from "ui/svelte/ingame/modals/WellModal.svelte";
+	import ChickenModal from "ui/svelte/ingame/modals/ChickenModal.svelte";
 
     export let scene: GameScene;
 
@@ -50,4 +51,5 @@
 
 	<FeederModal scene="{scene}" coins="{coins}"></FeederModal>
 	<WellModal scene="{scene}"></WellModal>
+	<ChickenModal scene="{scene}"></ChickenModal>
 </main>

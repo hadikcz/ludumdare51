@@ -10,6 +10,7 @@ import GameScene from 'scenes/GameScene';
 import { Vec2 } from 'types/Vec2';
 import Vector2 = Phaser.Math.Vector2;
 import Sprite = Phaser.GameObjects.Sprite;
+import { Events } from 'enums/Events';
 
 export default class AbstractChicken extends Phaser.GameObjects.Container {
 
@@ -20,6 +21,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     public scene!: GameScene;
     protected path: Vector2[] = [];
     protected image!: Sprite;
+    public spawnedEggs = 0;
+    private born: number = 0;
 
     private isDead: boolean = false;
     private hunger: number = 40;
@@ -31,11 +34,13 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private dieTimer: Phaser.Time.TimerEvent|null = null;
     private bubbleOffest: { x: number; y: number };
 
-    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false) {
+    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false, public chickenName: string) {
         super(scene, x, y, []);
 
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
+
+        this.born = Date.now() / 1000;
 
         let body = this.body as Phaser.Physics.Arcade.Body;
 
@@ -76,12 +81,30 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
     }
 
+    init (): void {
+        this.image.setInteractive({ useHandCursor: true });
+
+        this.image.on('pointerdown', () => {
+            this.scene.events.emit(Events.UI_CHICKEN_OPEN, this);
+        });
+    }
+
     preUpdate (anitmationImage: Sprite|undefined): void {
         if (this.body === undefined || this.body.velocity === undefined) {
             return;
         }
         if (this.isDead) {
             return;
+        }
+        let pointer = this.scene.input.activePointer;
+        let distance = TransformHelpers.getDistanceBetween(pointer.worldX, pointer.worldY, this.x, this.y);
+
+        if (this.image) {
+            if (distance < 10) {
+                this.image.setTint(0xFFFF00);
+            } else {
+                this.image.setTint(0xFFFFFF);
+            }
         }
 
         if (this.bubbleImage.visible) {
@@ -199,6 +222,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             } else {
                 this.stateAiEnds();
             }
+
         }
 
         if (this.aiState === ChickenAiStates.GO_TO_DRINK) {
@@ -436,5 +460,25 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     destroy (fromScene?: boolean) {
         this.bubbleImage.destroy(fromScene);
         super.destroy(fromScene);
+    }
+
+    getFood (): number {
+        return this.hunger;
+    }
+
+    getWater (): number {
+        return this.thirst;
+    }
+
+    getAge (): string {
+        let now = Date.now() / 1000;
+        let diffSecs = now - this.born;
+        let diffMinutes = diffSecs / 60;
+
+        return diffMinutes.toFixed(2);
+    }
+
+    isABaby (): boolean {
+        return this.isBaby;
     }
 }
