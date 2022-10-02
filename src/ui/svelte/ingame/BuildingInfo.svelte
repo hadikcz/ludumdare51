@@ -19,17 +19,22 @@
   .actionInfo {
     padding: 5px;
     height: auto;
-    background: rgba(0,0,0, 0.5);
     left: 50%;
     top: 100px;
     position: absolute;
     transform: translateX(-50%);
-    color: white;
-    font-size: 20px;
     z-index: 1000;
-    pointer-events: all
+    pointer-events: all;
+
+    font-size: 25px;
+    color: #b68962;
   }
 
+
+  .buildingInfo {
+    margin-left: 10px;
+    margin-top: 3px;
+  }
 
   .actionMenu {
     //position: absolute;
@@ -52,6 +57,10 @@
       margin-top: 3px;
       margin-bottom: 3px;
     }
+
+    .cancelIcon {
+      transform: translate(-4px, 3px);
+    }
   }
 
 </style>
@@ -59,9 +68,12 @@
 {#if visible}
 <div class="actionMenu">
     <div class="actionInfo">
-        <div class="buildingInfo">
-            Place building <span id="buildingName"></span>
-            <button type="button" on:click={handleCancel}>CANCEL</button>
+        <div class="sprite modals-building_mode_bg">
+            <div class="buildingInfo">
+                Place building <span id="buildingName"></span>
+                <div class="sprite modals-feeder-destroy_button cancelIcon" on:click={handleCancel}></div>
+            </div>
+
         </div>
     </div>
 </div>
