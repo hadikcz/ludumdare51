@@ -56,7 +56,7 @@ export default class Chicken extends AbstractChicken {
     }
 
     every10Seconds (): void {
-        this.spawnEgg();
+        // this.spawnEgg();
     }
 
     private spawnEgg (): void {

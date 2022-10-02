@@ -17,7 +17,7 @@ export default class FeederManager {
     }
 
     purchaseFeeder (x: number, y: number, type: FeederType): void {
-        if (!this.shop.canPurchaseFeeder()) {
+        if (!this.shop.canPurchaseFeeder(type)) {
             console.info('Can not purchase feeder, because coins');
             return;
         }

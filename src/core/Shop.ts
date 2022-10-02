@@ -1,9 +1,13 @@
+import { Buildings } from 'core/builder/Buildings';
+import { FeederType } from 'core/feeders/Feeder';
+import { Events } from 'enums/Events';
 import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
 
 export default class Shop {
 
-    public static readonly FEEDER_PRICE = 2;
+    public static readonly FEEDER_PRICE_FOOD = 2;
+    public static readonly FEEDER_PRICE_WATER = 4;
     public static readonly FEEDER_FILL_PRICE = 1;
     public coins$: Subject<number>;
 
@@ -12,6 +16,8 @@ export default class Shop {
         public coins: number = 0
     ) {
         this.coins$ = new Subject<number>();
+
+        this.scene.events.on(Events.UI_SHOP_TRY_PURCHASE, this.uiTryPurchase.bind(this));
     }
 
     sellEgg (): void {
@@ -25,8 +31,20 @@ export default class Shop {
         this.coins$.next(this.coins);
     }
 
-    canPurchaseFeeder (): boolean {
-        return this.coins >= Shop.FEEDER_PRICE;
+    canPurchaseFeeder (type: FeederType): boolean {
+        if (type === FeederType.FOOD) {
+            return this.canPurchaseFeederFood();
+        } else {
+            return this.canPurchaseFeederWater();
+        }
+    }
+
+    canPurchaseFeederFood (): boolean {
+        return this.coins >= Shop.FEEDER_PRICE_FOOD;
+    }
+
+    canPurchaseFeederWater (): boolean {
+        return this.coins >= Shop.FEEDER_PRICE_WATER;
     }
 
     canPurchaseFeederFill (): boolean {
@@ -34,13 +52,19 @@ export default class Shop {
     }
 
     purchaseFeeder (): void {
-        this.coins -= Shop.FEEDER_PRICE;
+        this.coins -= Shop.FEEDER_PRICE_FOOD;
         this.coins$.next(this.coins);
     }
 
     purchaseFeederFill (): void {
         this.coins -= Shop.FEEDER_FILL_PRICE;
         this.coins$.next(this.coins);
+    }
+
+    private uiTryPurchase (building: Buildings) {
+
+        // @TODO: CHECK if can pruchase it (coins);
+        this.scene.builder.startBuild(building);
     }
 
 }
