@@ -1,6 +1,7 @@
 import ChickenHouse from 'core/buildings/ChickenHouse';
 import Well from 'core/buildings/Well';
 import Shop from 'core/Shop';
+import { Events } from 'enums/Events';
 import ArrayHelpers from 'helpers/ArrayHelpers';
 import GameScene from 'scenes/GameScene';
 
@@ -40,6 +41,7 @@ export default class BuildingsManager {
         this.wells.add(well);
 
         this.shop.purchaseWell();
+        this.scene.events.emit(Events.NEW_WELL_PURCHASED);
     }
 
 

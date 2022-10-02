@@ -32,7 +32,14 @@
     let lastFeeder: Feeder|null;
 
 
+
+    scene.events.on(Events.UI_WELL_OPEN, () => {
+        close();
+    })
     scene.events.on(Events.UI_FEEDER_OPEN, (feeder: Feeder) => {
+        if (lastAmountSubscriber) {
+            lastAmountSubscriber.unsubscribe();
+        }
         lastFeeder = feeder;
         waterAviaible = feeder.getFeederTypeOf() === FeederType.DRINK;
         progress = feeder.getPercentageOfFill();

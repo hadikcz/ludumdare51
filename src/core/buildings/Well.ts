@@ -1,5 +1,6 @@
 import Image = Phaser.GameObjects.Image;
 import { Depths } from 'enums/Depths';
+import { Events } from 'enums/Events';
 import NumberHelpers from 'helpers/NumberHelpers';
 import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
@@ -32,10 +33,31 @@ export default class Well extends Image {
             repeat: Infinity,
             callbackScope: this,
             callback: () => {
-                this.amount++;
+                this.amount += 0.5;
                 this.amount$.next(this.amount);
             }
         });
+
+        this.setInteractive({ useHandCursor: true });
+
+        this.on('pointerdown', () => {
+            this.scene.events.emit(Events.UI_WELL_OPEN, this);
+        });
+    }
+
+    preUpdate (): void {
+        let pointer = this.scene.input.activePointer;
+        let inBounds = this.getBounds().contains(pointer.worldX, pointer.worldY);
+
+        if (inBounds) {
+            this.setTint(0xFFFF00);
+        } else {
+            this.setTint(0xFFFFFF);
+        }
+    }
+
+    getPercent (): number {
+        return Math.round((this.amount / Well.MAX_WELL_CAPACITY) * 100);
     }
 
     getWellAmount (): number {
