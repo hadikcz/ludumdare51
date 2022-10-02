@@ -47,8 +47,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         this.setAiState(ChickenAiStates.START_WANDERING);
 
         this.bubbleOffest = {
-            x: 8,
-            y: -6
+            x: 6,
+            y: -4
         };
         this.bubbleImage = this.scene.add.image(this.x + this.bubbleOffest.x, this.y + this.bubbleOffest.y, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1)
             .setDepth(Depths.BUILD_ICON);
@@ -97,16 +97,16 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         if (this.isHomeless) {
             this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_no_house');
+            this.bubbleImage.setFrame('ui/bubble_no_house_smaller');
         } else if (this.isHungry(true) && this.isThirsty(true)) {
             this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger');
+            this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger_smaller');
         } else if (this.isHungry(true)) {
             this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_hunger');
+            this.bubbleImage.setFrame('ui/bubble_hunger_smaller');
         } else if (this.isThirsty(true)) {
             this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_thirst');
+            this.bubbleImage.setFrame('ui/bubble_thirst_smaller');
         } else {
             this.bubbleImage.setVisible(false);
         }
