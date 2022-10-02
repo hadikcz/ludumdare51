@@ -1,0 +1,755 @@
+{
+	"textures": [
+		{
+			"image": "game.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 188,
+				"h": 188
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "egg_small",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 5,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 5,
+						"h": 7
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 5,
+						"h": 7
+					}
+				},
+				{
+					"filename": "coin2_shadow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 7
+					},
+					"frame": {
+						"x": 5,
+						"y": 0,
+						"w": 9,
+						"h": 7
+					}
+				},
+				{
+					"filename": "coin2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					},
+					"frame": {
+						"x": 14,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					}
+				},
+				{
+					"filename": "coin2_selected",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					},
+					"frame": {
+						"x": 23,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					}
+				},
+				{
+					"filename": "coin2_without_shadow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 9,
+						"h": 9
+					}
+				},
+				{
+					"filename": "egg_small_selection",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 9
+					},
+					"frame": {
+						"x": 41,
+						"y": 0,
+						"w": 7,
+						"h": 9
+					}
+				},
+				{
+					"filename": "chicken_baby_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 9
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 9
+					},
+					"frame": {
+						"x": 48,
+						"y": 0,
+						"w": 10,
+						"h": 9
+					}
+				},
+				{
+					"filename": "egg_selection",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 11
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 11
+					},
+					"frame": {
+						"x": 58,
+						"y": 0,
+						"w": 8,
+						"h": 11
+					}
+				},
+				{
+					"filename": "egg",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 11
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 11
+					},
+					"frame": {
+						"x": 66,
+						"y": 0,
+						"w": 8,
+						"h": 11
+					}
+				},
+				{
+					"filename": "coin",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 11
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 11
+					},
+					"frame": {
+						"x": 74,
+						"y": 0,
+						"w": 9,
+						"h": 11
+					}
+				},
+				{
+					"filename": "chicken_black_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 83,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "chicken_white_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 95,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "chicken_orange_static",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 12,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 107,
+						"y": 0,
+						"w": 12,
+						"h": 12
+					}
+				},
+				{
+					"filename": "ui/coin_bar",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 17
+					},
+					"frame": {
+						"x": 119,
+						"y": 0,
+						"w": 47,
+						"h": 17
+					}
+				},
+				{
+					"filename": "ui/death_skull",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 17,
+						"h": 18
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 166,
+						"y": 0,
+						"w": 17,
+						"h": 18
+					}
+				},
+				{
+					"filename": "ui/bubble_no_house_smaller",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 21
+					},
+					"frame": {
+						"x": 0,
+						"y": 18,
+						"w": 20,
+						"h": 21
+					}
+				},
+				{
+					"filename": "ui/bubble_hunger_smaller",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 21
+					},
+					"frame": {
+						"x": 20,
+						"y": 18,
+						"w": 20,
+						"h": 21
+					}
+				},
+				{
+					"filename": "ui/bubble_thirst_and_hunger_smaller",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 21
+					},
+					"frame": {
+						"x": 40,
+						"y": 18,
+						"w": 20,
+						"h": 21
+					}
+				},
+				{
+					"filename": "ui/bubble_thirst_smaller",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 21
+					},
+					"frame": {
+						"x": 60,
+						"y": 18,
+						"w": 20,
+						"h": 21
+					}
+				},
+				{
+					"filename": "feeder_water_5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 80,
+						"y": 18,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 127,
+						"y": 18,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 0,
+						"y": 43,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 43,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 43,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 94,
+						"y": 43,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 141,
+						"y": 43,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 0,
+						"y": 68,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_water_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 47,
+						"y": 68,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "feeder_food_5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 25
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 25
+					},
+					"frame": {
+						"x": 94,
+						"y": 68,
+						"w": 47,
+						"h": 25
+					}
+				},
+				{
+					"filename": "ui/bubble_hunger",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 28,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 28,
+						"h": 30
+					},
+					"frame": {
+						"x": 141,
+						"y": 68,
+						"w": 28,
+						"h": 30
+					}
+				},
+				{
+					"filename": "ui/bubble_thirst_and_hunger",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 28,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 28,
+						"h": 30
+					},
+					"frame": {
+						"x": 0,
+						"y": 98,
+						"w": 28,
+						"h": 30
+					}
+				},
+				{
+					"filename": "ui/bubble_no_house",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 28,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 28,
+						"h": 30
+					},
+					"frame": {
+						"x": 28,
+						"y": 98,
+						"w": 28,
+						"h": 30
+					}
+				},
+				{
+					"filename": "ui/bubble_thirst",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 28,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 28,
+						"h": 30
+					},
+					"frame": {
+						"x": 56,
+						"y": 98,
+						"w": 28,
+						"h": 30
+					}
+				},
+				{
+					"filename": "well",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 36
+					},
+					"frame": {
+						"x": 84,
+						"y": 98,
+						"w": 42,
+						"h": 36
+					}
+				},
+				{
+					"filename": "chicken_coop",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 57,
+						"h": 69
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 57,
+						"h": 69
+					},
+					"frame": {
+						"x": 126,
+						"y": 98,
+						"w": 57,
+						"h": 69
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ffa20f8c1f4c964838d17283cce3da30:d2546eb88260b8aaa4b2a05b7f5d5cc0:fc2835210f98bae8e8c1b7f0a84c9321$"
+	}
+}
