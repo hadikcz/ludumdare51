@@ -90,6 +90,28 @@ export default class Shop {
     }
 
     private uiTryPurchase (building: Buildings) {
+        switch (building) {
+            case Buildings.FEEDER_FOOD:
+                if (!this.canPurchaseFeederFood()) {
+                    return false;
+                }
+                break;
+            case Buildings.FEEDER_WATER:
+                if (!this.canPurchaseFeederWater()) {
+                    return false;
+                }
+                break;
+            case Buildings.WELL:
+                if (!this.canPurhcaseWell()) {
+                    return false;
+                }
+                break;
+            case Buildings.CHICKEN_HOUSE:
+                if (!this.canPurchaseChickenHouse()) {
+                    return false;
+                }
+                break;
+        }
 
         // @TODO: CHECK if can pruchase it (coins);
         this.scene.builder.startBuild(building);
