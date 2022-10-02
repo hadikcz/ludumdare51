@@ -1,3 +1,4 @@
+import DeathSkull from 'effects/DeathSkull';
 import FlyText from 'effects/FlyText';
 import GameScene from 'scenes/GameScene';
 
@@ -8,6 +9,7 @@ export default class EffectManager {
     private scene: GameScene;
 
     private flyTextGroup: Phaser.GameObjects.Group;
+    private deathSkullGroup: Phaser.GameObjects.Group;
 
     constructor (scene: GameScene) {
         this.scene = scene;
@@ -15,6 +17,12 @@ export default class EffectManager {
         this.flyTextGroup = this.scene.add.group({
             classType: FlyText,
             maxSize: 100,
+            runChildUpdate: true
+        });
+
+        this.deathSkullGroup = this.scene.add.group({
+            classType: DeathSkull,
+            maxSize: 30,
             runChildUpdate: true
         });
 
@@ -34,6 +42,17 @@ export default class EffectManager {
         return effect;
     }
 
+    launchDeathSkull (x: number, y: number): DeathSkull {
+        let group = this.deathSkullGroup;
+        let effect = group.getFirstDead();
+        if (!effect) {
+            effect = new DeathSkull(this.scene);
+            group.add(effect);
+        }
+
+        effect.launch(x, y);
+        return effect;
+    }
 
     private preparePools (): void {
         let group;
@@ -41,6 +60,12 @@ export default class EffectManager {
         group = this.flyTextGroup;
         for (let i = 0; i < group.maxSize; i++) {
             let effect = new FlyText(this.scene);
+            group.add(effect);
+        }
+
+        group = this.deathSkullGroup;
+        for (let i = 0; i < group.maxSize; i++) {
+            let effect = new DeathSkull(this.scene);
             group.add(effect);
         }
 

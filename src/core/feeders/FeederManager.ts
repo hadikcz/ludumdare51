@@ -1,6 +1,9 @@
 import Feeder, { FeederType } from 'core/feeders/Feeder';
 import Shop from 'core/Shop';
+import ArrayHelpers from 'helpers/ArrayHelpers';
+import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
+import { Vec2 } from 'types/Vec2';
 
 export default class FeederManager {
     public readonly feeders: Phaser.GameObjects.Group;
@@ -40,5 +43,31 @@ export default class FeederManager {
 
         feeder.purchaseFill();
         this.shop.purchaseFeeder();
+    }
+
+    getNearestFeederSlot (x: number, y: number, feederType: FeederType): {feeder: Feeder, slot: Vec2}|null {
+        let nearestFeeder = ArrayHelpers.findLowest<Feeder>(
+            // @ts-ignore
+            this.feeders.getChildren().filter((feeder: Feeder) => {
+                return feeder.getFeederTypeOf() === feederType;
+            }), (feeder: Feeder) => {
+                return TransformHelpers.getDistanceBetween(feeder.x, feeder.y, x, y);
+            });
+
+        if (!nearestFeeder) {
+            return null;
+        }
+
+        let nearestSlot = nearestFeeder.getNearestSlot(x, y);
+        if (!nearestSlot) {
+            return null;
+        }
+        return {
+            feeder: nearestFeeder,
+            slot: {
+                x: nearestSlot.x,
+                y: nearestSlot.y
+            }
+        };
     }
 }

@@ -1,10 +1,14 @@
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
+import ArrayHelpers from 'helpers/ArrayHelpers';
+import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
+import { Vec2 } from 'types/Vec2';
 
 export default class Feeder extends Phaser.GameObjects.Image implements IBuildingBounds {
 
 
     private static readonly MAX_VALUE = 50;
+    private slots: FeederSlot[] = [];
 
     constructor (
         public scene: GameScene,
@@ -18,6 +22,7 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         this.scene.add.existing(this);
 
         this.detectAndSetImage();
+        this.generateFeedingSlots();
     }
 
     purchaseFill (): void {
@@ -29,6 +34,15 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
 
     canPurchaseFill (): boolean {
         return this.amount < Feeder.MAX_VALUE;
+    }
+
+    tryEat (): boolean {
+        if (this.amount >= 1) {
+            this.amount--;
+            return true;
+        }
+
+        return false;
     }
 
     private detectAndSetImage (): void {
@@ -58,9 +72,103 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
     getImageBounds (): Phaser.Geom.Rectangle {
         return this.getBounds();
     }
+
+    getNearestSlot (x: number, y: number): Vec2|null {
+        // @TODO go to free slot, not random whcih could be occupied (for now skipping because it takes time)
+        let nearestSlot = ArrayHelpers.findLowest<FeederSlot>(this.slots, (slot: FeederSlot) => {
+            return TransformHelpers.getDistanceBetween(slot.x, slot.y, x, y);
+        });
+
+        if (nearestSlot) {
+            return {
+                x: nearestSlot.x,
+                y: nearestSlot.y
+            };
+        }
+
+        return null;
+    }
+
+    getFeederTypeOf (): FeederType {
+        return this.typeOf;
+    }
+
+    private generateFeedingSlots (): void {
+        let topOffset = 2;
+        let bottomOffset = -2;
+        let widthPart = 13;
+        let widthOffset = 6;
+        let height = 22;
+        this.slots = [
+            { // top left 1st
+                x: this.x + ((-widthPart * 2) + widthOffset),
+                y: this.y + (-height / 2 + topOffset),
+                occupied: false
+            },
+            // top left 2nd
+            {
+                x: this.x + (-widthPart + widthOffset),
+                y: this.y + (-height / 2 + topOffset),
+                occupied: false
+            },
+            { // top right 2nd
+                x: this.x + (widthPart -widthOffset),
+                y: this.y + (- height / 2 + topOffset),
+                occupied: false
+            },
+            { // top right 2nd
+                x: this.x + (widthPart * 2 - widthOffset),
+                y: this.y + (-height / 2 + topOffset),
+                occupied: false
+            },
+            // bottom
+            { // top left 1st
+                x: this.x + ((-widthPart * 2) + widthOffset),
+                y: this.y + (height / 2 - bottomOffset),
+                occupied: false
+            },
+            { // top left 2nd
+                x: this.x + (- widthPart + widthOffset),
+                y: this.y + (height / 2 - bottomOffset),
+                occupied: false
+            },
+            { // top right 2nd
+                x: this.x + (widthPart -widthOffset),
+                y: this.y + (height / 2 - bottomOffset),
+                occupied: false
+            },
+            { // top right 2nd
+                x: this.x + (widthPart * 2 - widthOffset),
+                y: this.y + (height / 2 - bottomOffset),
+                occupied: false
+            },
+            // left
+            {
+                x: this.x + ((-widthPart * 2 + widthOffset) - 7),
+                y: this.y,
+                occupied: false
+            },
+            // right
+            {
+                x: this.x + ((widthPart * 2 + widthOffset) - 5),
+                y: this.y,
+                occupied: false
+            }
+        ] as FeederSlot[];
+
+        // for (let slot of this.slots) {
+        //     this.scene.add.circle(slot.x, slot.y, 1, 0xFF0000);
+        // }
+    }
 }
 
 export enum FeederType {
     FOOD = 'food',
     DRINK = 'drink'
+}
+
+export interface FeederSlot {
+    x: number,
+    y: number,
+    occupied: boolean
 }

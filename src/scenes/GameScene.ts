@@ -2,6 +2,7 @@ import GameConfig from 'config/GameConfig';
 import Builder from 'core/builder/Builder';
 import ChickenManager from 'core/chicken/ChickenManager';
 import EggManager from 'core/chicken/EggManager';
+import { FeederType } from 'core/feeders/Feeder';
 import FeederManager from 'core/feeders/FeederManager';
 import MatrixWorld from 'core/pathfinding/MatrixWorld';
 import Shop from 'core/Shop';
@@ -67,6 +68,11 @@ export default class GameScene extends Phaser.Scene {
 
 
         this.ui = new UI(this);
+
+        setTimeout(() => {
+            this.shop.addCoins(50);
+            this.feederManager.purchaseFeeder(250, 250, FeederType.FOOD);
+        }, 1000);
 
     }
 

@@ -1,6 +1,8 @@
 import { ChickenAiStates } from 'core/chicken/ChickenAiStates';
 import { ChickenAnimations } from 'core/chicken/ChickenAnimations';
+import Feeder, { FeederType } from 'core/feeders/Feeder';
 import { Depths } from 'enums/Depths';
+import ArrayHelpers from 'helpers/ArrayHelpers';
 import ChanceHelpers from 'helpers/ChanceHelpers';
 import NumberHelpers from 'helpers/NumberHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
@@ -13,6 +15,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     private static readonly AMOUNT_OF_HUNGER_PER_CYCLE = 1;
     private static readonly AMOUNT_OF_THIRST_PER_CYCLE = 1;
+    private static readonly MAX_HUNGER_THIRST = 100;
 
     public scene!: GameScene;
     protected path: Vector2[] = [];
@@ -20,13 +23,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     private isDead: boolean = false;
     private hunger: number = 50;
-    private thirst: number = 50;
+    private thirst: number = 30;
+    private targetFeeder: Feeder|null = null;
 
     protected aiState!: ChickenAiStates;
+    private bubbleImage: Phaser.GameObjects.Image;
 
     constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false) {
         super(scene, x, y, []);
-
 
         this.scene.add.existing(this);
         this.scene.physics.world.enable(this);
@@ -39,6 +43,18 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         // this.setAiState(ChickenAiStates.IDLING);
         this.setAiState(ChickenAiStates.START_WANDERING);
+
+        this.bubbleImage = this.scene.add.image(8, -6, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1);
+        this.add(this.bubbleImage);
+        this.bubbleImage.setVisible(false);
+
+        this.scene.add.tween({
+            targets: this.bubbleImage,
+            yoyo: true,
+            repeat: Infinity,
+            duration: 500,
+            scale: 1.1
+        });
     }
 
     preUpdate (anitmationImage: Sprite|undefined): void {
@@ -53,6 +69,18 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             this.die();
         }
 
+        if (this.isHungry() && this.isThirsty()) {
+            this.bubbleImage.setVisible(true);
+            this.bubbleImage.setFrame('ui/bubble_thirsty_and_hunger');
+        } else if (this.isHungry()) {
+            this.bubbleImage.setVisible(true);
+            this.bubbleImage.setFrame('ui/bubble_hunger');
+        } else if (this.isThirsty()) {
+            this.bubbleImage.setVisible(true);
+            this.bubbleImage.setFrame('ui/bubble_thirst');
+        } else {
+            this.bubbleImage.setVisible(false);
+        }
 
         if (anitmationImage) {
             if (this.body === undefined) {
@@ -70,7 +98,20 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private async processAi (): Promise<void> {
+        if (this.isDead) return;
+
         let body = this.body as Phaser.Physics.Arcade.Body;
+
+
+
+        if (
+            this.aiState === ChickenAiStates.WANDERING
+            || this.aiState === ChickenAiStates.GOING_TO_EAT
+            || this.aiState === ChickenAiStates.GOING_TO_DRINK
+        ) {
+            this.move();
+        }
+
         if (this.aiState === ChickenAiStates.START_IDLING) {
             body.setVelocity(0, 0);
 
@@ -102,12 +143,114 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             this.setAiState(ChickenAiStates.WANDERING);
         }
 
-        if (this.aiState === ChickenAiStates.WANDERING) {
-            this.move();
+        if (this.aiState === ChickenAiStates.GO_TO_EAT) {
+            let nearestFeedInfo = this.scene.feederManager.getNearestFeederSlot(this.x, this.y, FeederType.FOOD);
+
+            if (nearestFeedInfo) {
+                let path = await this.findPath(nearestFeedInfo.slot.x, nearestFeedInfo.slot.y);
+                if (path) {
+                    this.setPath(path);
+                    this.setAiState(ChickenAiStates.GOING_TO_EAT);
+                } else {
+                    this.stateAiEnds();
+                }
+            } else {
+                this.stateAiEnds();
+            }
+        }
+
+        if (this.aiState === ChickenAiStates.GO_TO_DRINK) {
+            let nearestFeedInfo = this.scene.feederManager.getNearestFeederSlot(this.x, this.y, FeederType.DRINK);
+
+            if (nearestFeedInfo) {
+                let path = await this.findPath(nearestFeedInfo.slot.x, nearestFeedInfo.slot.y);
+                if (path) {
+                    this.targetFeeder = nearestFeedInfo.feeder;
+                    this.setPath(path);
+                    this.setAiState(ChickenAiStates.GOING_TO_DRINK);
+                } else {
+                    this.stateAiEnds();
+                }
+            } else {
+                this.stateAiEnds();
+            }
+        }
+
+        const eatDrinkTime = 5000; // @TODO: DO RANDOM
+        if (this.aiState === ChickenAiStates.START_EATING || this.aiState === ChickenAiStates.START_DRINKING) {
+            let result = this.targetFeeder?.tryEat();
+            if (result) {
+                if (this.aiState === ChickenAiStates.START_EATING) {
+                    this.hunger = AbstractChicken.MAX_HUNGER_THIRST;
+                    this.setAiState(ChickenAiStates.EATING);
+                } else {
+                    this.thirst = AbstractChicken.MAX_HUNGER_THIRST;
+                    this.setAiState(ChickenAiStates.DRINKING);
+                }
+                this.image.play(ChickenAnimations.EAT);
+
+                this.targetFeeder = null;
+
+                this.scene.time.delayedCall(eatDrinkTime, () => {
+                    this.stateAiEnds();
+                });
+            } else {
+                this.stateAiEnds();
+            }
         }
     }
 
     private stateAiEnds (): void {
+        if (this.isDead) return;
+
+        if (
+            this.aiState === ChickenAiStates.GOING_TO_EAT
+            || this.aiState === ChickenAiStates.GO_TO_DRINK
+        ) {
+            if (this.aiState === ChickenAiStates.GOING_TO_EAT) {
+                this.setAiState(ChickenAiStates.START_EATING);
+            } else if (this.aiState === ChickenAiStates.GO_TO_DRINK) {
+                this.setAiState(ChickenAiStates.START_DRINKING);
+            }
+
+            return;
+        }
+
+        let ignoreStates: ChickenAiStates[] = [
+            ChickenAiStates.GO_TO_EAT,
+            ChickenAiStates.GOING_TO_EAT,
+            ChickenAiStates.START_EATING,
+            ChickenAiStates.EATING,
+            ChickenAiStates.GO_TO_DRINK,
+            ChickenAiStates.GOING_TO_DRINK,
+            ChickenAiStates.START_DRINKING,
+            ChickenAiStates.DRINKING
+        ];
+
+        if (!ArrayHelpers.inArray(ignoreStates, this.aiState)) {
+            if (this.isHungry()) {
+                let isFeedingSlotAvaialable = this.scene.feederManager.getNearestFeederSlot(this.x, this.y, FeederType.FOOD);
+                if (isFeedingSlotAvaialable) {
+                    this.targetFeeder = isFeedingSlotAvaialable.feeder;
+                    this.setAiState(ChickenAiStates.GO_TO_EAT);
+                    return;
+                } else {
+                    console.log('No feeder to eat found');
+                }
+            }
+
+            if (this.isThirsty()) {
+                let isFeedingSlotAvaialable = this.scene.feederManager.getNearestFeederSlot(this.x, this.y, FeederType.DRINK);
+                if (isFeedingSlotAvaialable) {
+                    this.targetFeeder = isFeedingSlotAvaialable.feeder;
+                    this.setAiState(ChickenAiStates.GO_TO_DRINK);
+                    return;
+                } else {
+                    console.log('No feeder to drink found');
+                }
+            }
+        }
+
         if (this.aiState === ChickenAiStates.WANDERING) {
             if (ChanceHelpers.percentage(50) && !this.isBaby) {
                 this.setAiState(ChickenAiStates.START_IDLING_LOOKING);
@@ -116,6 +259,10 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             }
 
         } else if (this.aiState === ChickenAiStates.IDLING || this.aiState === ChickenAiStates.IDLING_LOOKING) {
+            this.setAiState(ChickenAiStates.START_WANDERING);
+        }
+
+        if (this.aiState === ChickenAiStates.EATING || this.aiState === ChickenAiStates.DRINKING) {
             this.setAiState(ChickenAiStates.START_WANDERING);
         }
     }
@@ -140,16 +287,25 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private async findWanderingTarget (): Promise<void> {
         let newWanderPoint = await this.getRandomWanderPoint();
         if (newWanderPoint) {
-            this.scene.matrixWorld.findPath(this.x, this.y, newWanderPoint.x, newWanderPoint.y, (status, points) => {
-                if (status) {
-                    points.splice(0, 1);
-                    this.path = points;
-                }
+            let path = await this.findPath(newWanderPoint.x, newWanderPoint.y);
+            if (path) {
+                this.setPath(path);
                 if (this.scene.matrixWorld.isDebug()) {
-                    this.scene.debugPath(points);
+                    this.scene.debugPath(path);
                 }
-            }, true, this);
+            } else {
+                console.error('Not path found');
+            }
         }
+    }
+
+    private async findPath (x: number, y: number): Promise<Vector2[]|null> {
+        let result = await this.scene.matrixWorld.findPathAsync(this.x, this.y, x, y);
+        if (result.success) {
+            result.path.splice(0, 1); // first point is me, skip it
+            return result.path;
+        }
+        return null;
     }
 
     cycle (): void {
@@ -167,8 +323,22 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private die (): void {
-        console.log('die');
-        this.destroy(true);
+        this.isDead = true;
+        this.scene.effectManager.launchDeathSkull(this.x, this.y - 10);
+
+        let body = this.body as Phaser.Physics.Arcade.Body;
+        body.setVelocity(0, 0);
+
+        this.image.stop();
+
+        this.scene.tweens.add({
+            targets: this,
+            duration: 1000,
+            alpha: 0,
+            onComplete: () => {
+                this.destroy(true);
+            }
+        });
     }
 
     private async getRandomWanderPoint (): Promise<Vec2|null> {
@@ -196,5 +366,21 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
 
         return null;
+    }
+
+    private isHungry (): boolean {
+        return this.hunger <= 25;
+    }
+
+    private isThirsty (): boolean {
+        return this.thirst <= 25;
+    }
+
+    private setPath (path: Vector2[]): void {
+        if (this.path.length > 0) {
+            console.error('Chaning path before it reach end of previous path');
+        }
+
+        this.path = path;
     }
 }

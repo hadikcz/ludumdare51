@@ -65,6 +65,18 @@ export default class MatrixWorld {
         }, callbackContext);
     }
 
+    async findPathAsync (x1: number, y1: number, x2: number, y2: number, nearestFallback: boolean = false): Promise<FindPathResult> {
+        return new Promise((resolve) => {
+            let callback = (success: boolean, points: Vector2[]): void => {
+                resolve({
+                    success,
+                    path: points
+                } as FindPathResult);
+            };
+            this.findPath(x1, y1, x2, y2, callback, nearestFallback, this);
+        })
+    }
+
     canMoveTo(currentX: number, currentY: number, targetX: number, targetY: number): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             this.findPath(currentX, currentY, targetX, targetY, (success, points) => {
@@ -187,4 +199,9 @@ export default class MatrixWorld {
 
         return tile.index === 1;
     }
+}
+
+export interface FindPathResult {
+    success: boolean,
+    path: Vector2[]
 }
