@@ -22,6 +22,8 @@
     let width = 238;
     let height = 154;
 
+    let feederType: FeederType = FeederType.FOOD;
+
 
     $: onePiecePriceNormalized = Math.max(0, onePiecePrice);
     $: maxFillPriceNormalized = Math.max(0, maxFillPrice);
@@ -33,6 +35,8 @@
         lastFeeder = feeder;
         waterAviaible = feeder.getFeederTypeOf() === FeederType.DRINK;
         progress = feeder.getPercentageOfFill();
+
+        feederType = feeder.getFeederTypeOf();
 
         maxFillPrice = feeder.getMaxFillUpPrice();
         onePiecePrice = feeder.getOnePiecePrice();
@@ -168,6 +172,10 @@
         .price.notEngCoins {
           color: red;
         }
+
+        .modals-feeder-progress_bar_fill.water {
+          filter: hue-rotate(113deg);
+        }
       }
 
     }
@@ -179,9 +187,15 @@
         <div class="sprite modals-feeder-close_button close" on:click={close}></div>
         <div class="sprite modals-feeder-bg bg"></div>
         <div class="inside">
-            <div class="title">Food</div>
+            <div class="title">
+            {#if feederType === FeederType.FOOD}
+                Food
+            {:else}
+                Water
+            {/if}
+            </div>
             <div class="progressBar sprite modals-feeder-progress_bar_bg">
-                <div class="sprite modals-feeder-progress_bar_fill" style="width: {progress}%;"></div>
+                <div class="sprite modals-feeder-progress_bar_fill {feederType === FeederType.DRINK ? 'water' : 'food'}" style="width: {progress}%;"></div>
             </div>
             <div class="progress">
                 {progress}%
