@@ -61,6 +61,6 @@
     <div class="sprite empty_bar">
         <div class="sprite coin_bar_icon icon {animate ? 'icon-pulse' : ''}"></div>
         <div class="coin-wrapper">
-            {coins}
+            {Math.round(coins)}
         </div>
     </div>

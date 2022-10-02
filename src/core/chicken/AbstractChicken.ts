@@ -25,8 +25,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private born: number = 0;
 
     private isDead: boolean = false;
-    private hunger: number = 40;
-    private thirst: number = 50;
+    private hunger: number = NumberHelpers.randomIntInRange(30, 50);
+    private thirst: number = NumberHelpers.randomIntInRange(40, 60);
     private targetFeeder: Feeder|null = null;
 
     protected aiState!: ChickenAiStates;
@@ -76,7 +76,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         if (this.isHomeless) {
             this.dieTimer = this.scene.time.addEvent({
-                delay: NumberHelpers.randomIntInRange(5000, 8000),
+                delay: NumberHelpers.randomIntInRange(3000, 5000),
                 callbackScope: this,
                 callback: () => {
                     this.die();
@@ -493,5 +493,9 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     isABaby (): boolean {
         return this.isBaby;
+    }
+
+    tryKill (): void {
+        this.die();
     }
 }

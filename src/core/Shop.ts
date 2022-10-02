@@ -7,7 +7,8 @@ import GameScene from 'scenes/GameScene';
 export default class Shop {
 
     public static readonly FEEDER_PRICE_FOOD = 2;
-    public static readonly FEEDER_FILL_PRICE = 1;
+    public static readonly FEEDER_FILL_PRICE_FOOD = 0.1;
+    public static readonly FEEDER_FILL_PRICE_WATER = 0.2;
     public static readonly FEEDER_PRICE_WATER = 4;
     public static readonly CHICKEN_HOUSE_PRICE = 50;
     public static readonly WELL_PRICE = 100;
@@ -57,10 +58,6 @@ export default class Shop {
         return this.coins >= Shop.FEEDER_PRICE_WATER;
     }
 
-    canPurchaseFeederFill (): boolean {
-        return this.coins >= Shop.FEEDER_FILL_PRICE;
-    }
-
     canPurchaseChickenHouse (): boolean {
         return this.coins >= Shop.CHICKEN_HOUSE_PRICE;
     }
@@ -84,10 +81,6 @@ export default class Shop {
         this.coins$.next(this.coins);
     }
 
-    purchaseFeederFill (): void {
-        this.coins -= Shop.FEEDER_FILL_PRICE;
-        this.coins$.next(this.coins);
-    }
 
     private uiTryPurchase (building: Buildings) {
         switch (building) {

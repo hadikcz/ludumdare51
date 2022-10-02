@@ -106,16 +106,16 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         let missing = Feeder.MAX_VALUE - this.amount;
 
         if (this.typeOf === FeederType.DRINK) {
-            return missing * Shop.FEEDER_PRICE_WATER;
+            return missing * Shop.FEEDER_FILL_PRICE_WATER;
         }
-        return missing * Shop.FEEDER_PRICE_FOOD;
+        return missing * Shop.FEEDER_FILL_PRICE_FOOD;
     }
 
     getOnePiecePrice (): number {
         if (this.typeOf === FeederType.DRINK) {
-            return Shop.FEEDER_PRICE_WATER;
+            return Shop.FEEDER_FILL_PRICE_WATER;
         }
-        return Shop.FEEDER_PRICE_FOOD;
+        return Shop.FEEDER_FILL_PRICE_FOOD;
     }
 
     tryEat (): boolean {

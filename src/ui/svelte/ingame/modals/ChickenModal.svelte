@@ -72,12 +72,12 @@
         lastChicken = null;
     }
 
-    // function tryDestroy(): void {
-    //     if (!lastChicken) return;
-    //
-    //     lastWell.tryDestroy();
-    //     close();
-    // }
+    function tryDestroy(): void {
+        if (!lastChicken) return;
+
+        lastChicken.tryKill();
+        close();
+    }
 </script>
 
 <style lang="scss">
@@ -166,6 +166,13 @@
 
       }
 
+      .destroyWrapper {
+        position: absolute;
+        right: 10px;
+        bottom: 35px;
+
+      }
+
     }
 </style>
 
@@ -210,6 +217,13 @@
             </div>
 
             <div class="note">Not refresing</div>
+
+            <div class="button-wrapper tooltip destroyWrapper" on:click={tryDestroy}>
+                <div class="button sprite modals-feeder-destroy_button"></div>
+                <span class="tooltiptext">
+                    Kill chicken
+                </span>
+            </div>
 
         </div>
     </div>
