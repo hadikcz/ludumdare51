@@ -9,6 +9,7 @@ import Shop from 'core/Shop';
 import WorldEnv from 'core/WorldEnv';
 import dat, { GUI } from 'dat.gui';
 import EffectManager from 'effects/EffectManager';
+import { Events } from 'enums/Events';
 import $ from 'jquery';
 import Phaser from 'phaser';
 import UI from 'ui/UI';
@@ -76,7 +77,12 @@ export default class GameScene extends Phaser.Scene {
         // this.shop.addCoins(50);
         //     this.feederManager.purchaseFeeder(250, 250, FeederType.FOOD);
         //     this.feederManager.purchaseFeeder(350, 250, FeederType.DRINK);
-        }, 1000);
+            this.scene.pause();
+        }, 500);
+
+        this.events.on(Events.WELCOME_CLOSED, () => {
+            this.scene.resume();
+        });
 
     }
 
