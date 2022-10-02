@@ -5,6 +5,8 @@ import TransformHelpers from 'helpers/TransformHelpers';
 
 export default class Coin extends Image {
     private shadow: Phaser.GameObjects.Image;
+    private timer: Phaser.Time.TimerEvent;
+    private clicked = false;
 
     constructor (
         public scene: GameScene,
@@ -57,19 +59,15 @@ export default class Coin extends Image {
         });
 
         this.on('pointerdown', () => {
-            this.shadow.destroy(true);
 
-            this.scene.tweens.add({
-                targets: this,
-                x: 250,
-                y: 15,
-                duration: 500,
-                ease: Phaser.Math.Easing.Expo.Out,
-                onComplete: () => {
-                    this.destroy(true);
-                }
-            });
+        });
 
+        this.timer = this.scene.time.addEvent({
+            delay: 15000,
+            callbackScope: this,
+            callback: () => {
+                this.click();
+            }
         });
 
     }
@@ -90,6 +88,7 @@ export default class Coin extends Image {
     }
 
     destroy (fromScene?: boolean) {
+        this.timer.destroy();
         this.scene.shop.sellEgg();
         super.destroy(fromScene);
 
@@ -97,5 +96,23 @@ export default class Coin extends Image {
         if (this.shadow) {
             this.shadow.destroy(true);
         }
+    }
+
+    private click (): void {
+        if (this.clicked) return;
+
+        this.clicked = true;
+        this.shadow.destroy(true);
+
+        this.scene.tweens.add({
+            targets: this,
+            x: 250,
+            y: 15,
+            duration: 500,
+            ease: Phaser.Math.Easing.Expo.Out,
+            onComplete: () => {
+                this.destroy(true);
+            }
+        });
     }
 }
