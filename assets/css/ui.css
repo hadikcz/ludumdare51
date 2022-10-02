@@ -1,7 +1,7 @@
 /* -----------------------------------------------------
    created with https://www.codeandweb.com/texturepacker 
    -----------------------------------------------------
-   $TexturePacker:SmartUpdate:1e6e78564e8119387123caf9cdd9b99c:a0eea69994d4e2a75202bbbc7b76c325:4c7ccf045e54e36629c6cbec5cb72956$
+   $TexturePacker:SmartUpdate:1bc363a5281935005192c547c2c7308a:7143dc90bb3c76cfb1c8706811f14387:4c7ccf045e54e36629c6cbec5cb72956$
    -----------------------------------------------------
 
    usage: <span class="{-spritename-} sprite"></span>
@@ -12,8 +12,17 @@
 
 .sprite {display:inline-block; overflow:hidden; background-repeat: no-repeat;background-image:url(ui.png);}
 
-.baby_chicken_bar {width:94px; height:34px; background-position: -1px -1px}
-.chicken_bar {width:94px; height:34px; background-position: -97px -1px}
-.coin_bar {width:94px; height:34px; background-position: -193px -1px}
-.coin_bar_icon {width:18px; height:20px; background-position: -385px -1px}
-.empty_bar {width:94px; height:34px; background-position: -289px -1px}
+.baby_chicken_bar {width:94px; height:34px; background-position: -1px -357px}
+.chicken_bar {width:94px; height:34px; background-position: -1px -393px}
+.coin_bar {width:94px; height:34px; background-position: -1px -429px}
+.coin_bar_icon {width:18px; height:20px; background-position: -97px -401px}
+.empty_bar {width:94px; height:34px; background-position: -1px -465px}
+.shop-purchase_button_chicken_house {width:44px; height:48px; background-position: -87px -1px}
+.shop-purchase_button_chicken_house_pressed {width:44px; height:48px; background-position: -87px -51px}
+.shop-purchase_button_feeder_food {width:44px; height:48px; background-position: -87px -101px}
+.shop-purchase_button_feeder_food_pressed {width:44px; height:48px; background-position: -87px -151px}
+.shop-purchase_button_feeder_water {width:44px; height:48px; background-position: -87px -201px}
+.shop-purchase_button_feeder_water_pressed {width:44px; height:48px; background-position: -87px -251px}
+.shop-purchase_button_well {width:44px; height:48px; background-position: -87px -301px}
+.shop-purchase_button_well_pressed {width:44px; height:48px; background-position: -97px -351px}
+.shop-shop_bg {width:84px; height:354px; background-position: -1px -1px}

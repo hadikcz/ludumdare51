@@ -7,6 +7,7 @@
 	import BuildingInfo from "ui/svelte/ingame/BuildingInfo.svelte";
 	import ChickenBar from "ui/svelte/ingame/ChickenBar.svelte";
 	import BabyChickenBar from "ui/svelte/ingame/BabyChickenBar.svelte";
+	import Shop from "ui/svelte/ingame/shop/Shop.svelte";
 
     export let scene: GameScene;
 
@@ -37,4 +38,5 @@
 		<BabyChickenBar scene="{scene}"></BabyChickenBar>
 	</div>
 	<BuildingInfo scene="{scene}"></BuildingInfo>
+	<Shop scene="{scene}"></Shop>
 </main>
