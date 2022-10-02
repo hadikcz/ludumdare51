@@ -1,8 +1,34 @@
 <script lang="ts">
 
-    let visible = true;
+    import GameScene from "scenes/GameScene";
+    import {Events} from "enums/Events";
+    import Feeder, {FeederType} from "core/feeders/Feeder";
+    import {Subscription} from "rxjs";
+
+    export let scene: GameScene;
+
+    let visible = false;
+    let lastAmountSubscriber: Subscription;
+    let progress = 100;
+    let waterAviaible = false;
+
+    scene.events.on(Events.UI_FEEDER_OPEN, (feeder: Feeder) => {
+        waterAviaible = feeder.getFeederTypeOf() === FeederType.DRINK;
+        progress = feeder.getPercentageOfFill();
+        console.log(progress);
+
+        lastAmountSubscriber = feeder.amount$.subscribe((value) => {
+            progress = Math.round((value / Feeder.MAX_VALUE) * 100);
+            console.log(progress);
+            console.log('should rerender');
+        })
+
+        visible = true;
+    });
+
 
     function close() {
+        lastAmountSubscriber.unsubscribe();
         visible = false;
     }
 </script>
@@ -104,10 +130,10 @@
         <div class="inside">
             <div class="title">Food</div>
             <div class="progressBar sprite modals-feeder-progress_bar_bg">
-                <div class="sprite modals-feeder-progress_bar_fill" style="width: 50%;"></div>
+                <div class="sprite modals-feeder-progress_bar_fill" style="width: {progress}%;"></div>
             </div>
             <div class="progress">
-                50%
+                {progress}%
             </div>
 
             <div class="buttons-row">
@@ -131,6 +157,7 @@
                 </div>
 
 
+                {#if waterAviaible}
                 <div class="button-wrapper tooltip">
                     <div class="button sprite modals-feeder-well_button"></div>
                     <span class="tooltiptext">
@@ -139,6 +166,7 @@
                         <div class="price">FREE</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>
                 </div>
+                {/if}
 
 
                 <div class="button-wrapper tooltip">

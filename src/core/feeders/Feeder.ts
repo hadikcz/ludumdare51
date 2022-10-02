@@ -1,14 +1,17 @@
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
 import { Depths } from 'enums/Depths';
+import { Events } from 'enums/Events';
 import ArrayHelpers from 'helpers/ArrayHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
+import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
 import { Vec2 } from 'types/Vec2';
 
 export default class Feeder extends Phaser.GameObjects.Image implements IBuildingBounds {
 
 
-    private static readonly MAX_VALUE = 50;
+    public static readonly MAX_VALUE = 50;
+    public readonly amount$: Subject<number>;
     private slots: FeederSlot[] = [];
 
     constructor (
@@ -22,11 +25,21 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
 
         this.scene.add.existing(this);
 
+
+        this.amount$ = new Subject<number>();
+        this.amount$.next(this.amount);
+
         this.setDepth(Depths.FEEDER);
 
         this.setInteractive({ useHandCursor: true });
         this.detectAndSetImage();
         this.generateFeedingSlots();
+
+        this.setInteractive({ useHandCursor: true });
+
+        this.on('pointerdown', () => {
+            this.scene.events.emit(Events.UI_FEEDER_OPEN, this);
+        });
     }
 
     preUpdate (): void {
@@ -47,6 +60,12 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         this.amount += 5;
 
         this.detectAndSetImage();
+
+        this.amount$.next(this.amount);
+    }
+
+    getPercentageOfFill (): number {
+        return Math.round((this.amount / Feeder.MAX_VALUE) * 100);
     }
 
     canPurchaseFill (): boolean {
@@ -56,6 +75,7 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
     tryEat (): boolean {
         if (this.amount >= 1) {
             this.amount--;
+            this.amount$.next(this.amount);
             this.detectAndSetImage();
             return true;
         }
