@@ -21,8 +21,20 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
 
         this.scene.add.existing(this);
 
+        this.setInteractive({ useHandCursor: true });
         this.detectAndSetImage();
         this.generateFeedingSlots();
+    }
+
+    preUpdate (): void {
+        let pointer = this.scene.input.activePointer;
+        let inBounds = this.getBounds().contains(pointer.worldX, pointer.worldY);
+
+        if (inBounds) {
+            this.setTint(0xFFFF00);
+        } else {
+            this.setTint(0xFFFFFF);
+        }
     }
 
     purchaseFill (): void {
