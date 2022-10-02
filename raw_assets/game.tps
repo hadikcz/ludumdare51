@@ -222,6 +222,59 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">game/coin.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game/coin2.png</key>
+            <key type="filename">game/coin2_selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game/coin2_shadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game/coin2_without_shadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">game/egg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -297,6 +350,7 @@
                 <false/>
             </struct>
             <key type="filename">game/ui/bubble_hunger.png</key>
+            <key type="filename">game/ui/bubble_no_house.png</key>
             <key type="filename">game/ui/bubble_thirst.png</key>
             <key type="filename">game/ui/bubble_thirst_and_hunger.png</key>
             <struct type="IndividualSpriteSettings">
@@ -308,6 +362,22 @@
                 <rect>7,8,14,15</rect>
                 <key>scale9Paddings</key>
                 <rect>7,8,14,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">game/ui/bubble_hunger_smaller.png</key>
+            <key type="filename">game/ui/bubble_no_house_smaller.png</key>
+            <key type="filename">game/ui/bubble_thirst_and_hunger_smaller.png</key>
+            <key type="filename">game/ui/bubble_thirst_smaller.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,10,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,10,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -181,7 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">ui/baby_chicken_bar.png</key>
+            <key type="filename">ui/chicken_bar.png</key>
             <key type="filename">ui/coin_bar.png</key>
+            <key type="filename">ui/empty_bar.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -191,6 +194,172 @@
                 <rect>12,4,23,9</rect>
                 <key>scale9Paddings</key>
                 <rect>12,4,23,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/big_modal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>45,35,91,69</rect>
+                <key>scale9Paddings</key>
+                <rect>45,35,91,69</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/build_chicken_houses.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,2,29,4</rect>
+                <key>scale9Paddings</key>
+                <rect>15,2,29,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/coin_bar_icon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/building_mode_bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,6,61,11</rect>
+                <key>scale9Paddings</key>
+                <rect>30,6,61,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/feeder/bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>340,340,680,680</rect>
+                <key>scale9Paddings</key>
+                <rect>340,340,680,680</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/feeder/close_button.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/feeder/destroy_button.png</key>
+            <key type="filename">ui/modals/feeder/plus_one_button.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,7,7</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/feeder/max_button.png</key>
+            <key type="filename">ui/modals/feeder/well_button.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,3,15,7</rect>
+                <key>scale9Paddings</key>
+                <rect>7,3,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/feeder/progress_bar_bg.png</key>
+            <key type="filename">ui/modals/feeder/progress_bar_fill.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,2,28,3</rect>
+                <key>scale9Paddings</key>
+                <rect>14,2,28,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/modals/well/bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,18,37,35</rect>
+                <key>scale9Paddings</key>
+                <rect>19,18,37,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/shop/purchase_button_chicken_house.png</key>
+            <key type="filename">ui/shop/purchase_button_chicken_house_pressed.png</key>
+            <key type="filename">ui/shop/purchase_button_feeder_food.png</key>
+            <key type="filename">ui/shop/purchase_button_feeder_food_pressed.png</key>
+            <key type="filename">ui/shop/purchase_button_feeder_water.png</key>
+            <key type="filename">ui/shop/purchase_button_feeder_water_pressed.png</key>
+            <key type="filename">ui/shop/purchase_button_well.png</key>
+            <key type="filename">ui/shop/purchase_button_well_pressed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,6,11,12</rect>
+                <key>scale9Paddings</key>
+                <rect>6,6,11,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/shop/shop_bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,41,21,81</rect>
+                <key>scale9Paddings</key>
+                <rect>11,41,21,81</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
