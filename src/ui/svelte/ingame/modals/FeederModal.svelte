@@ -4,6 +4,7 @@
     import {Events} from "enums/Events";
     import Feeder, {FeederType} from "core/feeders/Feeder";
     import {Subscription} from "rxjs";
+    import Well from "core/buildings/Well";
 
     export let scene: GameScene;
     export let coins: number;
@@ -54,6 +55,11 @@
         visible = true;
     });
 
+    let avaialbelWell: Well|null = null;
+    setInterval(() => {
+        avaialbelWell = scene.buildingManager.getFullestWell();
+    }, 100);
+
     scene.events.on(Events.NEW_FEEDER_PURHCASED, () => {
         close();
     })
@@ -77,6 +83,14 @@
         if (!lastFeeder) return;
 
         scene.feederManager.purchaseFillForFeederMax(lastFeeder);
+    }
+
+    function tryWellFill(): void {
+        if (!avaialbelWell) return;
+        if (!lastFeeder) return;
+
+        lastFeeder.feedFromWell(avaialbelWell)
+
     }
 </script>
 
@@ -231,10 +245,13 @@
 
 
                 {#if waterAviaible}
-                <div class="button-wrapper tooltip">
+                <div class="button-wrapper tooltip" on:click={tryWellFill}>
                     <div class="button sprite modals-feeder-well_button"></div>
                     <span class="tooltiptext">
                         Fill up from well<br>
+                        {#if !avaialbelWell}
+                            Well is not viable or not has enough water
+                        {/if}
                         <hr>
                         <div class="price">FREE</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>

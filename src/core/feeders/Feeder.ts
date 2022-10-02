@@ -1,4 +1,5 @@
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
+import Well from 'core/buildings/Well';
 import Shop from 'core/Shop';
 import { Depths } from 'enums/Depths';
 import { Events } from 'enums/Events';
@@ -70,6 +71,23 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
             }
         }
 
+        this.detectAndSetImage();
+
+        this.amount$.next(this.amount);
+    }
+
+    feedFromWell (well: Well): void {
+        if (!this.canPurchaseFill()) return;
+        if (this.typeOf !== FeederType.DRINK) return;
+
+        let amount = well.takeFromWell();
+
+        if (!amount) return;
+
+        this.amount += amount;
+        if (this.amount > Feeder.MAX_VALUE) {
+            this.amount = JSON.parse(JSON.stringify(Feeder.MAX_VALUE));
+        }
         this.detectAndSetImage();
 
         this.amount$.next(this.amount);

@@ -95,6 +95,9 @@ export default class Builder {
                     y
                 );
                 break;
+            case Buildings.WELL:
+                this.scene.buildingManager.purchaseWell(x,y);
+                break;
             default:
                 console.error('Building can not be buiild -> not implemented');
         }

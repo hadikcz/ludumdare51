@@ -1,5 +1,7 @@
 import ChickenHouse from 'core/buildings/ChickenHouse';
+import Well from 'core/buildings/Well';
 import Shop from 'core/Shop';
+import ArrayHelpers from 'helpers/ArrayHelpers';
 import GameScene from 'scenes/GameScene';
 
 export default class BuildingsManager {
@@ -26,5 +28,31 @@ export default class BuildingsManager {
         this.shop.purchaseChickenHouse();
 
         this.scene.chickenManager.housePurchasedIncreaseLimit();
+    }
+
+    purchaseWell (x: number, y: number): void {
+        if (!this.shop.canPurhcaseWell()) {
+            console.info('Can not purchase well, because coins');
+            return;
+        }
+
+        let well = new Well(this.scene, x, y);
+        this.wells.add(well);
+
+        this.shop.purchaseWell();
+    }
+
+
+    getFullestWell (): Well|null {
+        // @ts-ignore
+        let well = ArrayHelpers.findHighest<Well>(this.wells.getChildren(), (well: Well) => {
+            return well.getWellAmount();
+        }) as unknown as Well|null;
+
+        if (well && well.canBeTakenFrom()) {
+            return well;
+        }
+
+        return null;
     }
 }

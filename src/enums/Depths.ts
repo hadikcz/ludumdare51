@@ -5,6 +5,7 @@ export enum Depths {
     EGG,
     COINS_SHADOW,
     COINS,
+    WELL,
     CHICKEN,
     CHICKEN_HOUSE,
     DEATH_SKULL,

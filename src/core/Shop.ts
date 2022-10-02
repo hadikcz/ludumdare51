@@ -65,6 +65,10 @@ export default class Shop {
         return this.coins >= Shop.CHICKEN_HOUSE_PRICE;
     }
 
+    canPurhcaseWell (): boolean {
+        return this.coins >= Shop.WELL_PRICE;
+    }
+
     purchaseFeeder (price: number): void {
         this.coins -= price;
         this.coins$.next(this.coins);
@@ -72,6 +76,11 @@ export default class Shop {
 
     purchaseChickenHouse (): void {
         this.coins -= Shop.CHICKEN_HOUSE_PRICE;
+        this.coins$.next(this.coins);
+    }
+
+    purchaseWell (): void {
+        this.coins -= Shop.WELL_PRICE;
         this.coins$.next(this.coins);
     }
 
