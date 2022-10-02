@@ -245,6 +245,10 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         //     this.scene.add.circle(slot.x, slot.y, 1, 0xFF0000);
         // }
     }
+
+    tryDestroy (): void {
+        this.destroy();
+    }
 }
 
 export enum FeederType {

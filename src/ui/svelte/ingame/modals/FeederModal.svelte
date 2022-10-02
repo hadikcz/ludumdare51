@@ -92,12 +92,19 @@
         scene.feederManager.purchaseFillForFeederMax(lastFeeder);
     }
 
+    function tryDestroy(): void {
+        if (!lastFeeder) return;
+
+        lastFeeder.tryDestroy();
+        close();
+        // scene.feederManager.purchaseFillForFeederMax(lastFeeder);
+    }
+
     function tryWellFill(): void {
         if (!avaialbelWell) return;
         if (!lastFeeder) return;
 
         lastFeeder.feedFromWell(avaialbelWell)
-
     }
 </script>
 
@@ -266,7 +273,7 @@
                 {/if}
 
 
-                <div class="button-wrapper tooltip">
+                <div class="button-wrapper tooltip" on:click={tryDestroy}>
                     <div class="button sprite modals-feeder-destroy_button"></div>
                     <span class="tooltiptext">
                         Destroy

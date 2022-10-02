@@ -16,7 +16,7 @@
     let y = 250;
 
     let width = 150;
-    let height = 140;
+    let height = 174;
 
     let lastWell: Well|null;
 
@@ -51,6 +51,14 @@
         }
         visible = false;
         lastWell = null;
+    }
+
+    function tryDestroy(): void {
+        if (!lastWell) return;
+
+        lastWell.tryDestroy();
+        close();
+
     }
 </script>
 
@@ -116,6 +124,20 @@
           color: #b68962;
           text-align: center;
         }
+        .button {
+          text-align: center;
+          cursor: pointer;
+          display: inline-block;
+          transform: translateY(4px);
+        }
+
+        .button:hover {
+          filter: sepia(1);
+        }
+
+        .buttons-wrapper {
+          text-align: center;
+        }
 
       }
 
@@ -141,6 +163,18 @@
                 Fill up 0.5 per second<br>
                 Can be used to fill the drinker for free
             </div>
+
+
+            <div class="buttons-wrapper">
+                <div class="button-wrapper tooltip" on:click={tryDestroy}>
+                    <div class="button sprite modals-feeder-destroy_button"></div>
+                    <span class="tooltiptext">
+                            Destroy
+                        </span>
+                </div>
+
+            </div>
+
         </div>
     </div>
 {/if}

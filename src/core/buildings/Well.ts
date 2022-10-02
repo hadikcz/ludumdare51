@@ -11,6 +11,7 @@ export default class Well extends Image {
     public static readonly WELL_TRANSFER_VALUE = 5;
     public static readonly MAX_WELL_CAPACITY = 200;
     public amount$: Subject<number>;
+    private timer: Phaser.Time.TimerEvent;
 
     constructor (
         public scene: GameScene,
@@ -28,7 +29,7 @@ export default class Well extends Image {
 
         this.setDepth(Depths.WELL);
 
-        this.scene.time.addEvent({
+        this.timer = this.scene.time.addEvent({
             delay: 1000,
             repeat: Infinity,
             callbackScope: this,
@@ -78,6 +79,11 @@ export default class Well extends Image {
         this.amount$.next(this.amount);
 
         return Well.WELL_TRANSFER_VALUE;
+    }
+
+    tryDestroy (): void {
+        this.timer.destroy();
+        this.destroy();
     }
 
 

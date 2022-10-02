@@ -1,7 +1,7 @@
 /* -----------------------------------------------------
    created with https://www.codeandweb.com/texturepacker 
    -----------------------------------------------------
-   $TexturePacker:SmartUpdate:459293bfe42489e50917eb7820dd6246:c2fd4fafb35a7e1005b294a7dea27939:4c7ccf045e54e36629c6cbec5cb72956$
+   $TexturePacker:SmartUpdate:b94f1c3fcfdac64134a8b71717449a2a:54fbec6f45f5d8db867018d723669af0:4c7ccf045e54e36629c6cbec5cb72956$
    -----------------------------------------------------
 
    usage: <span class="{-spritename-} sprite"></span>
@@ -12,26 +12,26 @@
 
 .sprite {display:inline-block; overflow:hidden; background-repeat: no-repeat;background-image:url(ui.png);}
 
-.baby_chicken_bar {width:94px; height:34px; background-position: -87px -143px}
+.baby_chicken_bar {width:94px; height:34px; background-position: -1px -549px}
 .chicken_bar {width:132px; height:34px; background-position: -1px -513px}
-.coin_bar {width:94px; height:34px; background-position: -1px -549px}
-.coin_bar_icon {width:18px; height:20px; background-position: -179px -299px}
-.empty_bar {width:94px; height:34px; background-position: -135px -513px}
-.modals-feeder-bg {width:238px; height:154px; background-position: -1px -357px}
-.modals-feeder-close_button {width:28px; height:30px; background-position: -211px -549px}
-.modals-feeder-destroy_button {width:26px; height:26px; background-position: -179px -243px}
-.modals-feeder-max_button {width:58px; height:26px; background-position: -87px -329px}
-.modals-feeder-plus_one_button {width:26px; height:26px; background-position: -179px -271px}
-.modals-feeder-progress_bar_bg {width:112px; height:14px; background-position: -97px -549px}
-.modals-feeder-progress_bar_fill {width:112px; height:14px; background-position: -97px -565px}
-.modals-feeder-well_button {width:58px; height:26px; background-position: -147px -329px}
-.modals-well-bg {width:150px; height:140px; background-position: -87px -1px}
-.shop-purchase_button_chicken_house {width:44px; height:48px; background-position: -87px -179px}
-.shop-purchase_button_chicken_house_pressed {width:44px; height:48px; background-position: -87px -229px}
-.shop-purchase_button_feeder_food {width:44px; height:48px; background-position: -133px -179px}
-.shop-purchase_button_feeder_food_pressed {width:44px; height:48px; background-position: -87px -279px}
-.shop-purchase_button_feeder_water {width:44px; height:48px; background-position: -133px -229px}
-.shop-purchase_button_feeder_water_pressed {width:44px; height:48px; background-position: -133px -279px}
-.shop-purchase_button_well {width:44px; height:48px; background-position: -183px -143px}
-.shop-purchase_button_well_pressed {width:44px; height:48px; background-position: -179px -193px}
-.shop-shop_bg {width:84px; height:354px; background-position: -1px -1px}
+.coin_bar {width:94px; height:34px; background-position: -97px -549px}
+.coin_bar_icon {width:18px; height:20px; background-position: -143px -225px}
+.empty_bar {width:94px; height:34px; background-position: -87px -157px}
+.modals-feeder-bg {width:238px; height:154px; background-position: -1px -1px}
+.modals-feeder-close_button {width:28px; height:30px; background-position: -147px -193px}
+.modals-feeder-destroy_button {width:26px; height:26px; background-position: -87px -221px}
+.modals-feeder-max_button {width:58px; height:26px; background-position: -87px -483px}
+.modals-feeder-plus_one_button {width:26px; height:26px; background-position: -115px -221px}
+.modals-feeder-progress_bar_bg {width:112px; height:14px; background-position: -1px -585px}
+.modals-feeder-progress_bar_fill {width:112px; height:14px; background-position: -115px -585px}
+.modals-feeder-well_button {width:58px; height:26px; background-position: -87px -193px}
+.modals-well-bg {width:150px; height:174px; background-position: -87px -257px}
+.shop-purchase_button_chicken_house {width:44px; height:48px; background-position: -193px -157px}
+.shop-purchase_button_chicken_house_pressed {width:44px; height:48px; background-position: -193px -207px}
+.shop-purchase_button_feeder_food {width:44px; height:48px; background-position: -193px -433px}
+.shop-purchase_button_feeder_food_pressed {width:44px; height:48px; background-position: -193px -483px}
+.shop-purchase_button_feeder_water {width:44px; height:48px; background-position: -193px -533px}
+.shop-purchase_button_feeder_water_pressed {width:44px; height:48px; background-position: -135px -433px}
+.shop-purchase_button_well {width:44px; height:48px; background-position: -87px -433px}
+.shop-purchase_button_well_pressed {width:44px; height:48px; background-position: -147px -483px}
+.shop-shop_bg {width:84px; height:354px; background-position: -1px -157px}
