@@ -13,6 +13,7 @@ export default class Shop {
     public static readonly CHICKEN_HOUSE_PRICE = 50;
     public static readonly WELL_PRICE = 100;
     public coins$: Subject<number>;
+    public coinsEarned = 0;
 
     constructor (
         private scene: GameScene,
@@ -27,6 +28,9 @@ export default class Shop {
         this.coins += 1;
 
         this.coins$.next(this.coins);
+
+
+        this.coinsEarned += 1;
     }
 
     addCoins (amount: number): void {

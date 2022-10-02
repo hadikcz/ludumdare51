@@ -12,6 +12,7 @@
 	import WellModal from "ui/svelte/ingame/modals/WellModal.svelte";
 	import ChickenModal from "ui/svelte/ingame/modals/ChickenModal.svelte";
 	import WelcomeModal from "ui/svelte/ingame/WelcomeModal.svelte";
+	import GameOver from "ui/svelte/ingame/GameOver.svelte";
 
     export let scene: GameScene;
 
@@ -54,4 +55,5 @@
 	<WellModal scene="{scene}"></WellModal>
 	<ChickenModal scene="{scene}"></ChickenModal>
 	<WelcomeModal scene="{scene}"></WelcomeModal>
+	<GameOver scene="{scene}"></GameOver>
 </main>

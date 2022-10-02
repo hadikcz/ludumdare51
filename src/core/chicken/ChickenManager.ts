@@ -15,6 +15,7 @@ export default class ChickenManager {
     public readonly babyChickensCount$: Subject<number>;
     public readonly maxChickenLimit$: Subject<number>;
     public maxChickenLimit: number = 10;
+    public spawnedChickens = 0;
 
     constructor (
         private scene: GameScene
@@ -43,6 +44,8 @@ export default class ChickenManager {
         this.chickens.add(chicken);
 
         this.chickensCount$.next(this.getChickenCount());
+
+        this.spawnedChickens++;
     }
 
     spawnBabyChicken (x: number, y: number): void {

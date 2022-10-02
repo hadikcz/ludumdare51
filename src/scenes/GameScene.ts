@@ -39,12 +39,15 @@ export default class GameScene extends Phaser.Scene {
     public builder!: Builder;
     public buildingManager!: BuildingsManager;
     private worldEnv!: WorldEnv;
+    private isGameOver = false;
+    private gameStarted!: number;
 
     constructor () {
         super({ key: 'GameScene' });
     }
 
     create (): void {
+        this.gameStarted = Date.now() / 1000;
         window.scene = this;
         this.debugPathLines = this.add.group();
         this.initDebugUI();
@@ -92,6 +95,8 @@ export default class GameScene extends Phaser.Scene {
         }
         this.matrixWorld.update();
         this.builder.update();
+
+        this.detectGameOver();
     }
 
     private initDebugUI (): void {
@@ -137,4 +142,36 @@ export default class GameScene extends Phaser.Scene {
 
         this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
     }
+
+    private detectGameOver (): void {
+        if (this.isGameOver) return;
+
+        if (!this.didGameOver()) {
+            return;
+        }
+
+        this.isGameOver = true;
+
+        this.events.emit(Events.GAME_OVER, {
+            timeElapsed: Date.now() / 1000 - this.gameStarted,
+            totalChickens: this.chickenManager.spawnedChickens,
+            totalEggs: this.eggManager.totalEggs,
+            totalCoinsEarned: this.shop.coinsEarned
+        } as GameOverStats);
+
+        this.scene.pause();
+    }
+
+    private didGameOver (): boolean {
+        return this.chickenManager.getChickenCount() === 0
+        && this.chickenManager.getBabyChickenCount() === 0
+        && this.eggManager.eggs.getChildren().length === 0;
+    }
+}
+
+export interface GameOverStats {
+    timeElapsed: number,
+    totalChickens: number,
+    totalEggs: number,
+    totalCoinsEarned: number
 }
