@@ -31,10 +31,28 @@
       .value-wrapper.max {
         color: red;
       }
+
+      .warn {    position: absolute;
+        top: 34px;
+        left: 113px;
+        font-size: 11px;
+        word-spacing: 2px;
+        text-align: center;
+        color: #713970;
+        animation: fadein 1s;
+      }
+
+      @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
 </style>
 
 <div class="sprite chicken_bar">
-    <div class="value-wrapper {chickens >= maxChicken ? 'max' : ''}">
+    <div class="value-wrapper {chickens > maxChicken ? 'max' : ''}">
         {chickens} / {maxChicken}
     </div>
+    {#if chickens > maxChicken}
+        <div class="sprite build_chicken_houses warn">Build chicken house</div>
+    {/if}
 </div>
