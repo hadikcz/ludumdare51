@@ -16,6 +16,12 @@
     let maxFillPrice: number = 0;
     let onePiecePrice: number;
 
+    let x = 250;
+    let y = 250;
+
+    let width = 238;
+    let height = 154;
+
 
     $: onePiecePriceNormalized = Math.max(0, onePiecePrice);
     $: maxFillPriceNormalized = Math.max(0, maxFillPrice);
@@ -35,6 +41,11 @@
             progress = Math.round((value / Feeder.MAX_VALUE) * 100);
             maxFillPrice = feeder.getMaxFillUpPrice();
         })
+
+        x = feeder.x * 2 - (width / 2) + 8;
+        y = feeder.y * 2 - height - 12
+
+        console.log([x,y]);
 
         visible = true;
     });
@@ -72,7 +83,7 @@
       left: 50%;
       //width: 200px;
       //height: 200px;
-      transform: translate(-50%, -50%);
+      //transform: translate(-50%, -50%);
 
       .bg {
         z-index: 4999;
@@ -164,7 +175,7 @@
 
 
 {#if visible}
-    <div class="feeder-modal">
+    <div class="feeder-modal" style="left: {x}px; top: {y}px;">
         <div class="sprite modals-feeder-close_button close" on:click={close}></div>
         <div class="sprite modals-feeder-bg bg"></div>
         <div class="inside">
