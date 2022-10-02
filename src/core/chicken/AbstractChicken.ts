@@ -29,6 +29,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     protected aiState!: ChickenAiStates;
     private bubbleImage: Phaser.GameObjects.Image;
     private dieTimer: Phaser.Time.TimerEvent|null = null;
+    private bubbleOffest: { x: number; y: number };
 
     constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false) {
         super(scene, x, y, []);
@@ -45,8 +46,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         // this.setAiState(ChickenAiStates.IDLING);
         this.setAiState(ChickenAiStates.START_WANDERING);
 
-        this.bubbleImage = this.scene.add.image(8, -6, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1);
-        this.add(this.bubbleImage);
+        this.bubbleOffest = {
+            x: 8,
+            y: -6
+        };
+        this.bubbleImage = this.scene.add.image(this.x + this.bubbleOffest.x, this.y + this.bubbleOffest.y, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1)
+            .setDepth(Depths.BUILD_ICON);
+
+        // this.add(this.bubbleImage);
         this.bubbleImage.setVisible(false);
 
         this.scene.add.tween({
@@ -75,6 +82,13 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
         if (this.isDead) {
             return;
+        }
+
+        if (this.bubbleImage.visible) {
+            this.bubbleImage.setPosition(
+                this.x + this.bubbleOffest.x,
+                this.y + this.bubbleOffest.y,
+            );
         }
 
         if (this.hunger <= 0 || this.thirst <= 0) {
@@ -417,5 +431,10 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
 
         this.path = path;
+    }
+
+    destroy (fromScene?: boolean) {
+        this.bubbleImage.destroy(fromScene);
+        super.destroy(fromScene);
     }
 }
