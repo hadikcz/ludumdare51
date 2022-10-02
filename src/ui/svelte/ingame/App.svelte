@@ -12,6 +12,12 @@
 
     export let scene: GameScene;
 
+
+	let coins = 0;
+	scene.shop.coins$.subscribe((value) => {
+		coins = value;
+	});
+
 	onDestroy(() => {
 		console.log('main app svelte DESTYROYD');
 	});
@@ -41,5 +47,5 @@
 	<BuildingInfo scene="{scene}"></BuildingInfo>
 	<Shop scene="{scene}"></Shop>
 
-	<FeederModal scene="{scene}"></FeederModal>
+	<FeederModal scene="{scene}" coins="{coins}"></FeederModal>
 </main>

@@ -7,12 +7,14 @@
     let animate = false;
 
     scene.shop.coins$.subscribe((value: number) => {
-       coins = value;
 
-       animate = true;
-       setTimeout(() => {
-           animate = false;
-       }, 500)
+        if (value > coins) {
+           animate = true;
+           setTimeout(() => {
+               animate = false;
+           }, 500)
+        }
+       coins = value;
     });
 
 </script>

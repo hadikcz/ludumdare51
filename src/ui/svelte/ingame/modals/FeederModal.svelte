@@ -6,30 +6,62 @@
     import {Subscription} from "rxjs";
 
     export let scene: GameScene;
+    export let coins: number;
 
     let visible = false;
     let lastAmountSubscriber: Subscription;
     let progress = 100;
     let waterAviaible = false;
 
+    let maxFillPrice: number = 0;
+    let onePiecePrice: number;
+
+
+    $: onePiecePriceNormalized = Math.max(0, onePiecePrice);
+    $: maxFillPriceNormalized = Math.max(0, maxFillPrice);
+
+    let lastFeeder: Feeder|null;
+
+
     scene.events.on(Events.UI_FEEDER_OPEN, (feeder: Feeder) => {
+        lastFeeder = feeder;
         waterAviaible = feeder.getFeederTypeOf() === FeederType.DRINK;
         progress = feeder.getPercentageOfFill();
-        console.log(progress);
+
+        maxFillPrice = feeder.getMaxFillUpPrice();
+        onePiecePrice = feeder.getOnePiecePrice();
 
         lastAmountSubscriber = feeder.amount$.subscribe((value) => {
             progress = Math.round((value / Feeder.MAX_VALUE) * 100);
-            console.log(progress);
-            console.log('should rerender');
+            maxFillPrice = feeder.getMaxFillUpPrice();
         })
 
         visible = true;
     });
 
+    scene.events.on(Events.NEW_FEEDER_PURHCASED, () => {
+        close();
+    })
 
     function close() {
-        lastAmountSubscriber.unsubscribe();
+        if (lastAmountSubscriber) {
+            lastAmountSubscriber.unsubscribe();
+        }
         visible = false;
+        lastFeeder = null;
+    }
+
+
+    function purchaseOnePiece(): void {
+        if (!lastFeeder) return;
+
+        scene.feederManager.purchaseFillForFeeder(lastFeeder);
+    }
+
+    function purchaseMax(): void {
+        if (!lastFeeder) return;
+
+        scene.feederManager.purchaseFillForFeederMax(lastFeeder);
     }
 </script>
 
@@ -117,6 +149,14 @@
           font-size: 20px;
           display: inline-block;
         }
+
+        .price.full {
+          color: gray;
+        }
+
+        .price.notEngCoins {
+          color: red;
+        }
       }
 
     }
@@ -137,22 +177,30 @@
             </div>
 
             <div class="buttons-row">
-                <div class="button-wrapper tooltip">
+                <div class="button-wrapper tooltip" on:click={purchaseOnePiece}>
                     <div class="button sprite modals-feeder-plus_one_button"></div>
                     <span class="tooltiptext">
                         Purchase one bag of meal<br>
+                        {#if progress >= 100}
+                        <br>
+                            FULL
+                        {/if}
                         <hr>
-                        <div class="price">1</div> <div class="sprite coin_bar_icon coinTranslate"></div>
+                        <div class="price {progress >= 100 ? 'full' : ''} {onePiecePriceNormalized > coins ? 'notEngCoins' : ''}">{onePiecePriceNormalized}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>
                 </div>
 
 
-                <div class="button-wrapper tooltip">
+                <div class="button-wrapper tooltip"  on:click={purchaseMax}>
                     <div class="button sprite modals-feeder-max_button"></div>
                     <span class="tooltiptext">
                         Fill up with food<br>
+                        {#if progress >= 100}
+                        <br>
+                            FULL
+                        {/if}
                         <hr>
-                        <div class="price">10</div> <div class="sprite coin_bar_icon coinTranslate"></div>
+                        <div class="price {progress >= 100 ? 'full' : ''} {maxFillPriceNormalized > coins ? 'notEngCoins' : ''}">{maxFillPriceNormalized}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>
                 </div>
 

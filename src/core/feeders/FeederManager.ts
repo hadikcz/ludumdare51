@@ -1,5 +1,6 @@
 import Feeder, { FeederType } from 'core/feeders/Feeder';
 import Shop from 'core/Shop';
+import { Events } from 'enums/Events';
 import ArrayHelpers from 'helpers/ArrayHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
 import GameScene from 'scenes/GameScene';
@@ -25,11 +26,15 @@ export default class FeederManager {
         let feeder = new Feeder(this.scene, x, y, type);
         this.feeders.add(feeder);
 
-        this.shop.purchaseFeeder();
+        let price = this.shop.getFeederPrice(type);
+        this.shop.purchaseFeeder(price);
+
+        this.scene.events.emit(Events.NEW_FEEDER_PURHCASED);
     }
 
     purchaseFillForFeeder (feeder: Feeder): void {
-        if (!this.shop.canPurchaseFeederFill()) {
+        let price = feeder.getOnePiecePrice();
+        if (this.shop.coins < price) {
 
             console.info('Can not purchase feeder fill, because coins');
             return;
@@ -42,7 +47,25 @@ export default class FeederManager {
         }
 
         feeder.purchaseFill();
-        this.shop.purchaseFeeder();
+        this.shop.purchaseFeeder(price);
+    }
+
+    purchaseFillForFeederMax (feeder: Feeder): void {
+        let price = feeder.getMaxFillUpPrice();
+        if (this.shop.coins < price) {
+
+            console.info('Can not purchase MAX feeder fill, because coins');
+            return;
+        }
+
+        if (!feeder.canPurchaseFill()) {
+            console.info('Can not purchase feeder fill, because it is full.');
+
+            return;
+        }
+
+        feeder.purchaseFill(true);
+        this.shop.purchaseFeeder(price);
     }
 
     getNearestFeederSlot (x: number, y: number, feederType: FeederType): {feeder: Feeder, slot: Vec2}|null {

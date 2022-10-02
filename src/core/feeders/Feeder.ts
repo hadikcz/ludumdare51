@@ -1,7 +1,9 @@
 import { IBuildingBounds } from 'core/builder/IBuildingBounds';
+import Shop from 'core/Shop';
 import { Depths } from 'enums/Depths';
 import { Events } from 'enums/Events';
 import ArrayHelpers from 'helpers/ArrayHelpers';
+import NumberHelpers from 'helpers/NumberHelpers';
 import TransformHelpers from 'helpers/TransformHelpers';
 import { Subject } from 'rxjs';
 import GameScene from 'scenes/GameScene';
@@ -19,7 +21,8 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         x: number,
         y: number,
         private typeOf: FeederType,
-        private amount: number = Feeder.MAX_VALUE
+        // private amount: number = Feeder.MAX_VALUE
+        private amount: number = NumberHelpers.randomIntInRange(25, 35)
     ) {
         super(scene, x, y, 'game', 'feeder_water_1');
 
@@ -53,11 +56,19 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         }
     }
 
-    purchaseFill (): void {
+    purchaseFill (max: boolean = false): void {
         if (!this.canPurchaseFill()) {
             return;
         }
-        this.amount += 5;
+
+        if (max) {
+            this.amount = JSON.parse(JSON.stringify(Feeder.MAX_VALUE));
+        } else {
+            this.amount += 5;
+            if (this.amount > Feeder.MAX_VALUE) {
+                this.amount = JSON.parse(JSON.stringify(Feeder.MAX_VALUE));
+            }
+        }
 
         this.detectAndSetImage();
 
@@ -69,7 +80,24 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
     }
 
     canPurchaseFill (): boolean {
-        return this.amount < Feeder.MAX_VALUE;
+        return this.amount <= Feeder.MAX_VALUE;
+    }
+
+
+    getMaxFillUpPrice (): number {
+        let missing = Feeder.MAX_VALUE - this.amount;
+
+        if (this.typeOf === FeederType.DRINK) {
+            return missing * Shop.FEEDER_PRICE_WATER;
+        }
+        return missing * Shop.FEEDER_PRICE_FOOD;
+    }
+
+    getOnePiecePrice (): number {
+        if (this.typeOf === FeederType.DRINK) {
+            return Shop.FEEDER_PRICE_WATER;
+        }
+        return Shop.FEEDER_PRICE_FOOD;
     }
 
     tryEat (): boolean {
@@ -92,7 +120,8 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
             image = 'feeder_water_';
         }
 
-        if (this.amount <= 50 && this.amount > 37.5) {
+        // if (this.amount <= 50 && this.amount > 37.5) {
+        if (this.amount > 37.5) {
             image += 5;
         } else if (this.amount <= 37.5 && this.amount > 25) {
             image += 4;

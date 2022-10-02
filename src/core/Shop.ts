@@ -7,8 +7,8 @@ import GameScene from 'scenes/GameScene';
 export default class Shop {
 
     public static readonly FEEDER_PRICE_FOOD = 2;
-    public static readonly FEEDER_PRICE_WATER = 4;
     public static readonly FEEDER_FILL_PRICE = 1;
+    public static readonly FEEDER_PRICE_WATER = 4;
     public static readonly CHICKEN_HOUSE_PRICE = 50;
     public static readonly WELL_PRICE = 100;
     public coins$: Subject<number>;
@@ -41,6 +41,14 @@ export default class Shop {
         }
     }
 
+    getFeederPrice (type: FeederType): number {
+        if (type === FeederType.FOOD) {
+            return Shop.FEEDER_PRICE_FOOD;
+        } else {
+            return Shop.FEEDER_PRICE_WATER;
+        }
+    }
+
     canPurchaseFeederFood (): boolean {
         return this.coins >= Shop.FEEDER_PRICE_FOOD;
     }
@@ -57,8 +65,8 @@ export default class Shop {
         return this.coins >= Shop.CHICKEN_HOUSE_PRICE;
     }
 
-    purchaseFeeder (): void {
-        this.coins -= Shop.FEEDER_PRICE_FOOD;
+    purchaseFeeder (price: number): void {
+        this.coins -= price;
         this.coins$.next(this.coins);
     }
 
