@@ -48,7 +48,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         this.bubbleOffest = {
             x: 6,
-            y: -4
+            y: -6
         };
         this.bubbleImage = this.scene.add.image(this.x + this.bubbleOffest.x, this.y + this.bubbleOffest.y, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1)
             .setDepth(Depths.BUILD_ICON);
