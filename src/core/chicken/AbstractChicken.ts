@@ -60,6 +60,8 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         this.bubbleImage = this.scene.add.image(this.x + this.bubbleOffest.x, this.y + this.bubbleOffest.y, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1)
             .setDepth(Depths.BUILD_ICON);
 
+        // this.bubbleImage.setAlpha(0);
+
         // this.add(this.bubbleImage);
         this.bubbleImage.setVisible(false);
 
@@ -445,14 +447,14 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         return null;
     }
 
-    private isHungry (deadly = false): boolean {
+    protected isHungry (deadly = false): boolean {
         if (deadly) {
             return this.hunger <= 18;
         }
         return this.hunger <= 35;
     }
 
-    private isThirsty (deadly = false): boolean {
+    protected isThirsty (deadly = false): boolean {
         if (deadly) {
             return this.thirst <= 18;
         }

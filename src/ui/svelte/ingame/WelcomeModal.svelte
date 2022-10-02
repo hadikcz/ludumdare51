@@ -69,6 +69,9 @@
         position: absolute;
         cursor: pointer;
       }
+      .text-inside {
+        margin-top: 4px;
+      }
     }
 
 </style>
@@ -89,7 +92,7 @@
         </div>
 
         <div class="sprite modals-building_mode_bg play" on:click={play}>
-            PLAY
+            <div class="text-inside">PLAY</div>
         </div>
     </div>
 {/if}

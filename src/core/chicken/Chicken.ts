@@ -63,6 +63,9 @@ export default class Chicken extends AbstractChicken {
 
     private spawnEgg (): void {
         if (this.isHomeless) return;
+        if (this.isHungry() || this.isThirsty()) {
+            return;
+        }
 
         this.scene.eggManager.spawnEgg(this.x, this.y);
 
