@@ -7,6 +7,7 @@ export default class Coin extends Image {
     private shadow: Phaser.GameObjects.Image;
     private timer: Phaser.Time.TimerEvent;
     private clicked = false;
+    private clickable = false;
 
     constructor (
         public scene: GameScene,
@@ -54,12 +55,15 @@ export default class Coin extends Image {
                     y: this.y + 25,
                     duration: secondTime,
                     ease: Phaser.Math.Easing.Bounce.Out,
+                    onComplete: () => {
+                        this.clickable = true;
+                    }
                 });
             }
         });
 
         this.on('pointerdown', () => {
-
+            this.click();
         });
 
         this.timer = this.scene.time.addEvent({
@@ -99,6 +103,7 @@ export default class Coin extends Image {
     }
 
     private click (): void {
+        if (!this.clickable) return;
         if (this.clicked) return;
 
         this.clicked = true;

@@ -98,6 +98,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private async processAi (): Promise<void> {
+        if (this.scene === undefined) return;
         if (this.isDead) return;
 
         let body = this.body as Phaser.Physics.Arcade.Body;
@@ -201,6 +202,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     }
 
     private stateAiEnds (): void {
+        if (this.scene === undefined) return;
         if (this.isDead) return;
 
         if (
