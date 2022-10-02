@@ -5,12 +5,13 @@
 
     let chickens = scene.chickenManager.getChickenCount();
     let maxChicken = scene.chickenManager.getMaxChickenLimit();
-    console.log(maxChicken);
 
     scene.chickenManager.chickensCount$.subscribe((value: number) => {
-       chickens = value;
+        chickens = value;
     });
-
+    scene.chickenManager.maxChickenLimit$.subscribe((value: number) => {
+        maxChicken = value;
+    });
 </script>
 
 <style lang="scss">

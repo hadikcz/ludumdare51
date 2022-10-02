@@ -15,7 +15,7 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         x: number,
         y: number,
         private typeOf: FeederType,
-        private amount: number = 15
+        private amount: number = Feeder.MAX_VALUE
     ) {
         super(scene, x, y, 'game', 'feeder_water_1');
 

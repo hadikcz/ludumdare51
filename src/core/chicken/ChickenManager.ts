@@ -1,3 +1,4 @@
+import AbstractChicken from 'core/chicken/AbstractChicken';
 import BabyChicken from 'core/chicken/BabyChicken';
 import Chicken from 'core/chicken/Chicken';
 import Phaser from 'phaser';
@@ -6,6 +7,7 @@ import GameScene from 'scenes/GameScene';
 
 export default class ChickenManager {
 
+    public static readonly CHICKEN_PER_HOUSE = 25;
     private chickens: Phaser.GameObjects.Group;
     private babyChickens: Phaser.GameObjects.Group;
     public readonly chickensCount$: Subject<number>;
@@ -58,6 +60,40 @@ export default class ChickenManager {
 
     getBabyChickenCount (): number {
         return this.babyChickens.getChildren().length;
+    }
+
+    housePurchasedIncreaseLimit (): void {
+        this.maxChickenLimit += ChickenManager.CHICKEN_PER_HOUSE;
+        this.maxChickenLimit$.next(this.maxChickenLimit);
+
+        this.checkHomlessChicken();
+    }
+
+    private checkHomlessChicken (): void {
+        let notHomelessChickenCount = 0;
+        // @ts-ignore
+        for (let chicken: AbstractChicken of this.chickens.getChildren()) {
+            // @ts-ignore
+            if (!chicken.isChickenHomeless()) {
+                notHomelessChickenCount++;
+            }
+        }
+
+        console.log('found not homeless chicken ' + notHomelessChickenCount);
+
+        let countOfChickenWhichCanLiveInHouseNow = this.getMaxChickenLimit() - notHomelessChickenCount;
+
+        console.log('countOfChickenWhichCanLiveInHouseNow ' + countOfChickenWhichCanLiveInHouseNow);
+
+        // @ts-ignore
+        for (let chicken: AbstractChicken of this.chickens.getChildren()) {
+            // @ts-ignore
+            if (chicken.isChickenHomeless() && countOfChickenWhichCanLiveInHouseNow > 0) {
+                // @ts-ignore
+                chicken.disableHomeless();
+                countOfChickenWhichCanLiveInHouseNow--;
+            }
+        }
     }
 
     private startTimers (): void {

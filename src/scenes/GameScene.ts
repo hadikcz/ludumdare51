@@ -1,5 +1,6 @@
 import GameConfig from 'config/GameConfig';
 import Builder from 'core/builder/Builder';
+import BuildingsManager from 'core/buildings/BuildingsManager';
 import ChickenManager from 'core/chicken/ChickenManager';
 import EggManager from 'core/chicken/EggManager';
 import FeederManager from 'core/feeders/FeederManager';
@@ -35,6 +36,7 @@ export default class GameScene extends Phaser.Scene {
     public shop!: Shop;
     public feederManager!: FeederManager;
     public builder!: Builder;
+    public buildingManager!: BuildingsManager;
 
     constructor () {
         super({ key: 'GameScene' });
@@ -61,6 +63,7 @@ export default class GameScene extends Phaser.Scene {
         this.chickenManager = new ChickenManager(this);
         this.eggManager = new EggManager(this);
         this.feederManager = new FeederManager(this, this.shop);
+        this.buildingManager = new BuildingsManager(this, this.shop);
 
         this.builder = new Builder(this);
         // this.startCameraControls();

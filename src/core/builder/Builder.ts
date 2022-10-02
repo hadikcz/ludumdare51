@@ -74,21 +74,29 @@ export default class Builder {
         if (!this.isBuildMode()) return;
         if (!this.canPlace) return;
 
-        if (this.buildMode === Buildings.FEEDER_FOOD) {
-            this.scene.feederManager.purchaseFeeder(
-                x,
-                y,
-                FeederType.FOOD
-            );
-        }
-
-
-        if (this.buildMode === Buildings.FEEDER_WATER) {
-            this.scene.feederManager.purchaseFeeder(
-                x,
-                y,
-                FeederType.DRINK
-            );
+        switch (this.buildMode) {
+            case Buildings.FEEDER_FOOD:
+                this.scene.feederManager.purchaseFeeder(
+                    x,
+                    y,
+                    FeederType.FOOD
+                );
+                break;
+            case Buildings.FEEDER_WATER:
+                this.scene.feederManager.purchaseFeeder(
+                    x,
+                    y,
+                    FeederType.DRINK
+                );
+                break;
+            case Buildings.CHICKEN_HOUSE:
+                this.scene.buildingManager.purchaseChickenHouse(
+                    x,
+                    y
+                );
+                break;
+            default:
+                console.error('Building can not be buiild -> not implemented');
         }
 
         this.cancelBuilding();

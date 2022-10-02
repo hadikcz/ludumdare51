@@ -28,6 +28,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
     protected aiState!: ChickenAiStates;
     private bubbleImage: Phaser.GameObjects.Image;
+    private dieTimer: Phaser.Time.TimerEvent|null = null;
 
     constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false) {
         super(scene, x, y, []);
@@ -58,7 +59,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
 
         if (this.isHomeless) {
-            this.scene.time.addEvent({
+            this.dieTimer = this.scene.time.addEvent({
                 delay: NumberHelpers.randomIntInRange(5000, 8000),
                 callbackScope: this,
                 callback: () => {
@@ -109,6 +110,18 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         }
 
         this.processAi();
+    }
+
+    isChickenHomeless (): boolean {
+        return this.isHomeless;
+    }
+
+    disableHomeless (): void {
+        if (this.dieTimer) {
+            this.dieTimer.destroy();
+        }
+        this.isHomeless = false;
+        console.log('chicken is no longer homless');
     }
 
     private async processAi (): Promise<void> {

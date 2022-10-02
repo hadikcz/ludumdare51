@@ -9,6 +9,8 @@ export default class Shop {
     public static readonly FEEDER_PRICE_FOOD = 2;
     public static readonly FEEDER_PRICE_WATER = 4;
     public static readonly FEEDER_FILL_PRICE = 1;
+    public static readonly CHICKEN_HOUSE_PRICE = 50;
+    public static readonly WELL_PRICE = 100;
     public coins$: Subject<number>;
 
     constructor (
@@ -51,8 +53,17 @@ export default class Shop {
         return this.coins >= Shop.FEEDER_FILL_PRICE;
     }
 
+    canPurchaseChickenHouse (): boolean {
+        return this.coins >= Shop.CHICKEN_HOUSE_PRICE;
+    }
+
     purchaseFeeder (): void {
         this.coins -= Shop.FEEDER_PRICE_FOOD;
+        this.coins$.next(this.coins);
+    }
+
+    purchaseChickenHouse (): void {
+        this.coins -= Shop.CHICKEN_HOUSE_PRICE;
         this.coins$.next(this.coins);
     }
 

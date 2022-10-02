@@ -3,6 +3,7 @@
     import ShopPurchaseButton from "ui/svelte/ingame/shop/ShopPurchaseButton.svelte";
     import GameScene from "scenes/GameScene";
     import {Buildings} from "core/builder/Buildings";
+    import Shop from "core/Shop";
 
 
     export let scene: GameScene;
@@ -33,9 +34,9 @@
 
 <div class="wrapper sprite shop-shop_bg">
     <div class="items-wrapper">
-        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="1" icon="feeder_food" type="{Buildings.FEEDER_FOOD}"></ShopPurchaseButton>
-        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="3" icon="feeder_water" type="{Buildings.FEEDER_WATER}"></ShopPurchaseButton>
-        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="10" icon="chicken_house" type="{Buildings.CHICKEN_HOUSE}"></ShopPurchaseButton>
-        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="50" icon="well" type="{Buildings.WELL}"></ShopPurchaseButton>
+        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.FEEDER_PRICE_FOOD}" icon="feeder_food" type="{Buildings.FEEDER_FOOD}"></ShopPurchaseButton>
+        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.FEEDER_PRICE_WATER}" icon="feeder_water" type="{Buildings.FEEDER_WATER}"></ShopPurchaseButton>
+        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.CHICKEN_HOUSE_PRICE}" icon="chicken_house" type="{Buildings.CHICKEN_HOUSE}"></ShopPurchaseButton>
+        <ShopPurchaseButton events="{scene.events}" coins="{coins}" price="{Shop.WELL_PRICE}" icon="well" type="{Buildings.WELL}"></ShopPurchaseButton>
     </div>
 </div>

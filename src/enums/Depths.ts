@@ -3,6 +3,7 @@ export enum Depths {
     COINS_SHADOW,
     COINS,
     CHICKEN,
+    CHICKEN_HOUSE,
     DEATH_SKULL,
     FLY_TEXT,
     BUILD_ICON,
