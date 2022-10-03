@@ -2,6 +2,7 @@ import { ChickenAiStates } from 'core/chicken/ChickenAiStates';
 import { ChickenAnimations } from 'core/chicken/ChickenAnimations';
 import Feeder, { FeederType } from 'core/feeders/Feeder';
 import { Depths } from 'enums/Depths';
+import { Events } from 'enums/Events';
 import ArrayHelpers from 'helpers/ArrayHelpers';
 import ChanceHelpers from 'helpers/ChanceHelpers';
 import NumberHelpers from 'helpers/NumberHelpers';
@@ -10,7 +11,6 @@ import GameScene from 'scenes/GameScene';
 import { Vec2 } from 'types/Vec2';
 import Vector2 = Phaser.Math.Vector2;
 import Sprite = Phaser.GameObjects.Sprite;
-import { Events } from 'enums/Events';
 
 export default class AbstractChicken extends Phaser.GameObjects.Container {
 
@@ -33,6 +33,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     private bubbleImage: Phaser.GameObjects.Image;
     private dieTimer: Phaser.Time.TimerEvent|null = null;
     private bubbleOffest: { x: number; y: number };
+    private currentBubble: Bubbles = Bubbles.NONE;
     // private shadow: Phaser.GameObjects.Arc;
     // private shadowYOffeste: number;
 
@@ -80,6 +81,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
 
         if (this.isHomeless) {
+            this.showBubble(Bubbles.HOMELESS);
             this.dieTimer = this.scene.time.addEvent({
                 delay: NumberHelpers.randomIntInRange(3000, 5000),
                 callbackScope: this,
@@ -131,25 +133,25 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             );
         }
 
-        if (this.hunger <= 0 || this.thirst <= 0) {
+        if (this.hunger <= -5 || this.thirst <= -2) {
             this.die();
         }
 
-        if (this.isHomeless) {
-            this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_no_house_smaller');
-        } else if (this.isHungry(true) && this.isThirsty(true)) {
-            this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger_smaller');
-        } else if (this.isHungry(true)) {
-            this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_hunger_smaller');
-        } else if (this.isThirsty(true)) {
-            this.bubbleImage.setVisible(true);
-            this.bubbleImage.setFrame('ui/bubble_thirst_smaller');
-        } else {
-            this.bubbleImage.setVisible(false);
-        }
+        // if (this.isHomeless) {
+        //     this.bubbleImage.setVisible(true);
+        //     this.bubbleImage.setFrame('ui/bubble_no_house_smaller');
+        // } else if (this.isHungry(true) && this.isThirsty(true)) {
+        //     this.bubbleImage.setVisible(true);
+        //     this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger_smaller');
+        // } else if (this.isHungry(true)) {
+        //     this.bubbleImage.setVisible(true);
+        //     this.bubbleImage.setFrame('ui/bubble_hunger_smaller');
+        // } else if (this.isThirsty(true)) {
+        //     this.bubbleImage.setVisible(true);
+        //     this.bubbleImage.setFrame('ui/bubble_thirst_smaller');
+        // } else {
+        //     this.bubbleImage.setVisible(false);
+        // }
 
         if (anitmationImage) {
             if (this.body === undefined) {
@@ -234,9 +236,11 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                     this.setPath(path);
                     this.setAiState(ChickenAiStates.GOING_TO_EAT);
                 } else {
+                    this.showBubble(Bubbles.HUNGER);
                     this.stateAiEnds();
                 }
             } else {
+                this.showBubble(Bubbles.HUNGER);
                 this.stateAiEnds();
             }
 
@@ -252,21 +256,45 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                     this.setPath(path);
                     this.setAiState(ChickenAiStates.GOING_TO_DRINK);
                 } else {
+                    this.showBubble(Bubbles.THIRST);
                     this.stateAiEnds();
                 }
             } else {
+                this.showBubble(Bubbles.THIRST);
                 this.stateAiEnds();
             }
         }
 
-        const eatDrinkTime = 5000; // @TODO: DO RANDOM
+        const eatDrinkTime = NumberHelpers.randomIntInRange(3000, 5000);
         if (this.aiState === ChickenAiStates.START_EATING || this.aiState === ChickenAiStates.START_DRINKING) {
+            console.log('START');
             let result = this.targetFeeder?.tryEat();
             if (result) {
                 if (this.aiState === ChickenAiStates.START_EATING) {
+                    if (this.currentBubble === Bubbles.HUNGER_AND_THIRST) {
+                        console.log('A1');
+                        this.showBubble(Bubbles.THIRST, Bubbles.HUNGER);
+                    } else {
+                        console.log('A2');
+                        this.showBubble(Bubbles.NONE);
+                    }
+
+
                     this.hunger = AbstractChicken.MAX_HUNGER_THIRST;
                     this.setAiState(ChickenAiStates.EATING);
+
+
                 } else {
+                    console.log(this.currentBubble);
+                    if (this.currentBubble === Bubbles.HUNGER_AND_THIRST) {
+                        console.log('B1');
+                        this.showBubble(Bubbles.HUNGER, Bubbles.THIRST);
+                    } else {
+                        console.log('B2');
+                        this.showBubble(Bubbles.NONE);
+                    }
+
+
                     this.thirst = AbstractChicken.MAX_HUNGER_THIRST;
                     this.setAiState(ChickenAiStates.DRINKING);
                 }
@@ -278,6 +306,11 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                     this.stateAiEnds();
                 });
             } else {
+                if (this.aiState === ChickenAiStates.START_EATING) {
+                    this.showBubble(Bubbles.HUNGER);
+                } else {
+                    this.showBubble(Bubbles.THIRST);
+                }
                 this.stateAiEnds();
             }
         }
@@ -319,6 +352,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                     this.setAiState(ChickenAiStates.GO_TO_EAT);
                     return;
                 } else {
+                    this.showBubble(Bubbles.HUNGER);
                     console.log('No feeder to eat found');
                 }
             }
@@ -330,6 +364,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
                     this.setAiState(ChickenAiStates.GO_TO_DRINK);
                     return;
                 } else {
+                    this.showBubble(Bubbles.THIRST);
                     console.log('No feeder to drink found');
                 }
             }
@@ -444,7 +479,6 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             );
 
             if (await this.scene.matrixWorld.canMoveTo(this.x, this.y, randomPoint.x, randomPoint.y)) {
-                console.log('wander point');
                 return randomPoint;
             }
         }
@@ -503,4 +537,73 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     tryKill (): void {
         this.die();
     }
+
+    showBubble (bubble: Bubbles, nowEating: Bubbles|null = null): void {
+        console.log('show bubble ' + bubble);
+        // console.log('current buble ' + bubble);
+        // console.log('now eating ' + nowEating);
+        if (this.isHomeless) {
+            this.bubbleImage.setVisible(true);
+            this.bubbleImage.setFrame('ui/bubble_no_house_smaller');
+            return;
+        }
+
+        if (
+            (this.currentBubble === Bubbles.HUNGER && bubble === Bubbles.THIRST)
+            ||
+            (this.currentBubble === Bubbles.THIRST && bubble === Bubbles.HUNGER)
+        ) {
+            console.log('bble BOTH FORCE');
+            bubble = Bubbles.HUNGER_AND_THIRST;
+        }
+
+        if (this.currentBubble === Bubbles.HUNGER_AND_THIRST && (bubble === Bubbles.HUNGER || bubble === Bubbles.THIRST) && !nowEating) {
+            return;
+        }
+
+        // if (nowEating && bubble === Bubbles.NONE && this.currentBubble === Bubbles.HUNGER_AND_THIRST) {
+        //     console.log('bble B');
+        //     if (nowEating === Bubbles.HUNGER) {
+        //         console.log('bble B1');
+        //         bubble = Bubbles.THIRST;
+        //     } else if (nowEating === Bubbles.THIRST) {
+        //         console.log('bble B2');
+        //         bubble = Bubbles.HUNGER;
+        //     }
+        // }
+
+        // console.log('RES: ' + bubble);
+
+        switch (bubble) {
+            case Bubbles.NONE:
+                this.bubbleImage.setVisible(false);
+                break;
+            case Bubbles.HUNGER:
+                this.bubbleImage.setVisible(true);
+                this.bubbleImage.setFrame('ui/bubble_hunger_smaller');
+                break;
+            case Bubbles.THIRST:
+                this.bubbleImage.setVisible(true);
+                this.bubbleImage.setFrame('ui/bubble_thirst_smaller');
+                break;
+            case Bubbles.HUNGER_AND_THIRST:
+                this.bubbleImage.setVisible(true);
+                this.bubbleImage.setFrame('ui/bubble_thirst_and_hunger_smaller');
+                break;
+            case Bubbles.HOMELESS:
+                this.bubbleImage.setVisible(true);
+                this.bubbleImage.setFrame('ui/bubble_no_house_smaller');
+                break;
+        }
+        this.currentBubble = bubble;
+        // console.log('---BBLE END----');
+    }
+}
+
+enum Bubbles {
+    NONE='NONE',
+    HUNGER ='HUNGER',
+    THIRST='THIRST',
+    HUNGER_AND_THIRST='HUNGER_AND_THIRST',
+    HOMELESS='HOMELESS'
 }

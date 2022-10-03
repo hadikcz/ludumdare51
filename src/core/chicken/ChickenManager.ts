@@ -8,13 +8,13 @@ import GameScene from 'scenes/GameScene';
 
 export default class ChickenManager {
 
-    public static readonly CHICKEN_PER_HOUSE = 25;
+    public static readonly CHICKEN_PER_HOUSE = 10;
     private chickens: Phaser.GameObjects.Group;
     private babyChickens: Phaser.GameObjects.Group;
     public readonly chickensCount$: Subject<number>;
     public readonly babyChickensCount$: Subject<number>;
     public readonly maxChickenLimit$: Subject<number>;
-    public maxChickenLimit: number = 10;
+    public maxChickenLimit: number = 5;
     public spawnedChickens = 0;
 
     constructor (
@@ -30,6 +30,10 @@ export default class ChickenManager {
         this.startTimers();
 
         this.spawnChicken(300, 300, 'Eve', true);
+
+        setInterval(() => {
+            this.chickensCount$.next(this.getChickenCount());
+        }, 500);
     }
 
     spawnChicken (x: number, y: number, name: string|null = null, maxed: boolean = false): void {
@@ -75,6 +79,11 @@ export default class ChickenManager {
         this.maxChickenLimit$.next(this.maxChickenLimit);
 
         this.checkHomlessChicken();
+    }
+
+    isOverCapLimitVery (): boolean {
+        let percent = (this.getChickenCount() / this.maxChickenLimit) * 100;
+        return percent >= 100;
     }
 
     private checkHomlessChicken (): void {

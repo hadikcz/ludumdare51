@@ -28,9 +28,22 @@ export default class Egg extends Phaser.GameObjects.Image {
             callbackScope: this,
             callback: () => {
                 if (this.destroyed) return;
-                this.emit('born');
 
-                this.destroy(true);
+                if (this.scene.chickenManager.isOverCapLimitVery()) {
+                    this.scene.add.tween({
+                        targets: this,
+                        alpha: 0,
+                        duration: 500,
+                        onComplete: () => {
+                            this.destroy(true);
+                        }
+                    });
+                    // this.scene.effectManager.launchDeathSkull(this.x, this.y);
+                } else {
+                    this.emit('born');
+                    this.destroy(true);
+                }
+
             }
         });
 

@@ -190,7 +190,7 @@
                 Food
             </div>
             <div class="progressBar sprite modals-feeder-progress_bar_bg">
-                <div class="sprite modals-feeder-progress_bar_fill" style="width: {food}%;"></div>
+                <div class="sprite modals-feeder-progress_bar_fill" style="width: {Math.max(0, food)}%;"></div>
             </div>
             <div class="progress">
                 <!--{progress}%-->
@@ -201,7 +201,7 @@
                 Water
             </div>
             <div class="progressBar sprite modals-feeder-progress_bar_bg">
-                <div class="sprite modals-feeder-progress_bar_fill water" style="width: {water}%;"></div>
+                <div class="sprite modals-feeder-progress_bar_fill water" style="width: {Math.max(0, water)}%;"></div>
             </div>
             <div class="progress">
                 <!--{progress}%-->

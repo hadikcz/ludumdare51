@@ -28,15 +28,15 @@ export default class BabyChicken extends AbstractChicken {
 
         this.image.anims.create({
             key: ChickenAnimations.IDLING,
-            frames: this.scene.anims.generateFrameNumbers('chicken_baby', AnimationHelpers.getRangeAnimationObjectByRowAndLength(3, 3) ),
-            frameRate: 15,
+            frames: this.scene.anims.generateFrameNumbers('chicken_baby', { frames: [8, 9] } ),
+            frameRate: NumberHelpers.randomFloatInRange(2, 3),
             repeat: Infinity
         });
 
         this.image.anims.create({
             key: ChickenAnimations.EAT,
             frames: this.scene.anims.generateFrameNumbers('chicken_baby', { frames: [1, 2] } ),
-            frameRate: 15,
+            frameRate: 10,
             repeat: Infinity
         });
 
