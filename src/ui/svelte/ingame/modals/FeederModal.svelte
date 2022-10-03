@@ -110,6 +110,7 @@
 
 <style lang="scss">
     .feeder-modal {
+      pointer-events: all;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -133,6 +134,7 @@
       }
 
       .inside {
+        pointer-events: all;
         position: absolute;
         top: 0;
         left: 0;

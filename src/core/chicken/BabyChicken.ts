@@ -15,7 +15,11 @@ export default class BabyChicken extends AbstractChicken {
         this.scene.time.addEvent({
             delay: NumberHelpers.randomIntInRange(15000, 35000),
             callbackScope: this,
-            callback: this.bornChicken
+            callback: () => {
+                if (this.scene !== undefined) {
+                    this.bornChicken();
+                }
+            }
         });
 
 
@@ -50,6 +54,7 @@ export default class BabyChicken extends AbstractChicken {
     }
 
     private bornChicken (): void {
+        if (this.scene === undefined) return;
         this.scene.chickenManager.spawnChicken(this.x, this.y, this.chickenName);
         this.destroy(true);
     }

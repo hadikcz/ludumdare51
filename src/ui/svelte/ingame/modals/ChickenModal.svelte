@@ -29,6 +29,9 @@
     let lastChicken: AbstractChicken|null;
 
 
+    $: eggPrice = Chicken.BASIC_EGG_PRICE / (1 + age);
+
+
     scene.events.on(Events.UI_CHICKEN_OPEN, (chicken: AbstractChicken) => {
         if (lastAmountSubscriber) {
             lastAmountSubscriber.unsubscribe();
@@ -82,6 +85,7 @@
 
 <style lang="scss">
     .well-modal {
+      pointer-events: all;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -105,6 +109,8 @@
       }
 
       .inside {
+        pointer-events: all;
+        line-height: 17px;
         position: absolute;
         top: 0;
         left: 0;
@@ -121,7 +127,7 @@
 
         .progressBar {
           position: relative;
-          margin-top: 5px;
+          margin-top: -2px;
           left: 50%;
           transform: translateX(-50%);
         }
@@ -168,8 +174,8 @@
 
       .destroyWrapper {
         position: absolute;
-        right: 10px;
-        bottom: 35px;
+        right: 7px;
+        bottom: 55px;
 
       }
 
@@ -210,7 +216,8 @@
             <div class="info" style="text-align: left; margin-left: 15px;">
                 Age: {age}min<br>
                 {#if !isBaby}
-                    Eggs: {eggs}
+                    Eggs: {eggs}<br>
+                    Egg price: {eggPrice.toFixed(2)}
                 {:else}
                     Is a baby
                 {/if}

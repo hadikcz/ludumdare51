@@ -16,6 +16,7 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
     public static readonly MAX_VALUE = 50;
     public readonly amount$: Subject<number>;
     private slots: FeederSlot[] = [];
+    private clickArea: Phaser.GameObjects.Rectangle;
 
     constructor (
         public scene: GameScene,
@@ -39,9 +40,13 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         this.detectAndSetImage();
         this.generateFeedingSlots();
 
+        this.clickArea = this.scene.add.rectangle(this.x, this.y + 2, 50, 18, 0x000000, 0)
+            .setDepth(Depths.FEEDER_CLICK);
+
+        this.clickArea.setInteractive({ useHandCursor: true });
         this.setInteractive({ useHandCursor: true });
 
-        this.on('pointerdown', () => {
+        this.clickArea.on('pointerdown', () => {
             this.scene.events.emit(Events.UI_FEEDER_OPEN, this);
         });
     }
@@ -248,6 +253,11 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
 
     tryDestroy (): void {
         this.destroy();
+    }
+
+    destroy (fromScene?: boolean) {
+        this.clickArea.destroy(fromScene);
+        super.destroy(fromScene);
     }
 }
 

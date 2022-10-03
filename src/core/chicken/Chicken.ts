@@ -8,6 +8,7 @@ import GameScene from 'scenes/GameScene';
 export default class Chicken extends AbstractChicken {
 
 
+    public static readonly BASIC_EGG_PRICE = 1.5;
     private typeOfChicken: ChickenTypes;
 
     constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false, name: string, maxed = false) {
@@ -68,8 +69,16 @@ export default class Chicken extends AbstractChicken {
         }
 
         let age = parseFloat(this.getAge());
-        let value = Math.round(1 + age);
-        this.scene.eggManager.spawnEgg(this.x, this.y, value);
+        let value = 1 + age;
+
+        let realEggPrice = Chicken.BASIC_EGG_PRICE / value;
+        console.log([
+            'chicken edd price',
+            realEggPrice,
+            value
+        ]);
+
+        this.scene.eggManager.spawnEgg(this.x, this.y, realEggPrice);
 
         this.spawnedEggs++;
     }
