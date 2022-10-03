@@ -75,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
 
         this.ui = new UI(this);
 
-        this.shop.addCoins(5);
+        this.shop.addCoins(10);
         setTimeout(() => {
         // this.shop.addCoins(50);
         //     this.feederManager.purchaseFeeder(250, 250, FeederType.FOOD);

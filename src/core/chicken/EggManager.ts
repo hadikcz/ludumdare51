@@ -12,8 +12,8 @@ export default class EggManager {
         this.eggs = this.scene.add.group();
     }
 
-    spawnEgg (x: number, y: number): void {
-        const egg = new Egg(this.scene, x, y);
+    spawnEgg (x: number, y: number, value: number): void {
+        const egg = new Egg(this.scene, x, y, value);
         this.eggs.add(egg);
 
         this.totalEggs++;

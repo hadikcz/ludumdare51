@@ -239,7 +239,7 @@
                             FULL
                         {/if}
                         <hr>
-                        <div class="price {progress >= 100 ? 'full' : ''} {onePiecePriceNormalized > coins ? 'notEngCoins' : ''}">{onePiecePriceNormalized}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
+                        <div class="price {progress >= 100 ? 'full' : ''} {onePiecePriceNormalized > coins ? 'notEngCoins' : ''}">{onePiecePriceNormalized.toFixed(2)}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>
                 </div>
 
@@ -253,7 +253,7 @@
                             FULL
                         {/if}
                         <hr>
-                        <div class="price {progress >= 100 ? 'full' : ''} {maxFillPriceNormalized > coins ? 'notEngCoins' : ''}">{maxFillPriceNormalized}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
+                        <div class="price {progress >= 100 ? 'full' : ''} {maxFillPriceNormalized > coins ? 'notEngCoins' : ''}">{maxFillPriceNormalized.toFixed(2)}</div> <div class="sprite coin_bar_icon coinTranslate"></div>
                     </span>
                 </div>
 

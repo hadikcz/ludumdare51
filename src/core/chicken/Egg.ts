@@ -7,16 +7,19 @@ import GameScene from 'scenes/GameScene';
 export default class Egg extends Phaser.GameObjects.Image {
 
     private destroyed = false;
+    private clickArea: Phaser.GameObjects.Arc;
     constructor (
         public scene: GameScene,
         x: number,
-        y: number
+        y: number,
+        private value: number = 1
     ) {
         super(scene, x, y, 'game', 'egg');
 
         this.scene.add.existing(this);
 
         this.setDepth(Depths.EGG);
+
 
         // longer delay
         // after that born small baby chicken, which will wait 30-60 seconds before be big
@@ -31,10 +34,13 @@ export default class Egg extends Phaser.GameObjects.Image {
             }
         });
 
-        this.setInteractive({ useHandCursor: true });
+        this.clickArea = this.scene.add.circle(this.x, this.y, 8, 0x000000, 0)
+            .setDepth(Depths.EGG_CLICK);
 
-        this.on('pointerdown', () => {
-            new Coin(this.scene, this.x, this.y, 1);
+        this.clickArea.setInteractive({ useHandCursor: true });
+
+        this.clickArea.on('pointerdown', () => {
+            new Coin(this.scene, this.x, this.y, this.value);
             // this.scene.shop.sellEgg();
             this.destroyed = true;
             this.destroy(true);
@@ -62,5 +68,10 @@ export default class Egg extends Phaser.GameObjects.Image {
         } else {
             this.setFrame('egg');
         }
+    }
+
+    destroy (fromScene?: boolean) {
+        this.clickArea.destroy(fromScene);
+        super.destroy(fromScene);
     }
 }

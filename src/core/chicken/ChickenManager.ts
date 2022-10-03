@@ -29,15 +29,15 @@ export default class ChickenManager {
 
         this.startTimers();
 
-        this.spawnChicken(300, 300);
+        this.spawnChicken(300, 300, 'Eve', true);
     }
 
-    spawnChicken (x: number, y: number, name: string|null = null): void {
+    spawnChicken (x: number, y: number, name: string|null = null, maxed: boolean = false): void {
         if (!name) {
             name = this.getRandomName();
         }
         let isHomeless = this.chickens.getChildren().length >= this.maxChickenLimit;
-        const chicken = new Chicken(this.scene, x, y, isHomeless, name);
+        const chicken = new Chicken(this.scene, x, y, isHomeless, name, maxed);
         chicken.on('destroy', () => {
             this.chickensCount$.next(this.getChickenCount());
         });

@@ -11,6 +11,7 @@ export enum Depths {
     CHICKEN_HOUSE,
     DEATH_SKULL,
     BUBBLE,
+    EGG_CLICK,
     FLY_TEXT,
     BUILD_ICON,
     GRID_DEBUG,

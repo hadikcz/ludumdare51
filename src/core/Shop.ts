@@ -24,8 +24,8 @@ export default class Shop {
         this.scene.events.on(Events.UI_SHOP_TRY_PURCHASE, this.uiTryPurchase.bind(this));
     }
 
-    sellEgg (): void {
-        this.coins += 1;
+    sellEgg (value: number): void {
+        this.coins += value;
 
         this.coins$.next(this.coins);
 

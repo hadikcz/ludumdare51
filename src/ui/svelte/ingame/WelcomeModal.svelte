@@ -88,6 +88,7 @@
             <li>2. Purchase feeder for keep them alive</li>
             <li>3. Purchase hen house for increase capacity</li>
             <li>4. Refill feeder with water and food</li>
+            <li style="color: #ffff68">PRO TIP: The older the hen, the more value the eggs have</li>
         </ul>
         </div>
 

@@ -14,8 +14,8 @@ import { Events } from 'enums/Events';
 
 export default class AbstractChicken extends Phaser.GameObjects.Container {
 
-    private static readonly AMOUNT_OF_HUNGER_PER_CYCLE = 1;
-    private static readonly AMOUNT_OF_THIRST_PER_CYCLE = 1;
+    private static readonly AMOUNT_OF_HUNGER_PER_CYCLE = 0.5;
+    private static readonly AMOUNT_OF_THIRST_PER_CYCLE = 0.75;
     private static readonly MAX_HUNGER_THIRST = 100;
 
     public scene!: GameScene;
@@ -36,7 +36,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
     // private shadow: Phaser.GameObjects.Arc;
     // private shadowYOffeste: number;
 
-    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false, public chickenName: string) {
+    constructor (scene: GameScene, x: number, y: number, private isBaby: boolean = false, protected isHomeless: boolean = false, public chickenName: string, maxed: boolean = false) {
         super(scene, x, y, []);
 
         this.scene.add.existing(this);
@@ -50,6 +50,11 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
 
         this.setDepth(Depths.CHICKEN);
 
+        if (maxed) {
+            this.hunger = AbstractChicken.MAX_HUNGER_THIRST;
+            this.thirst = AbstractChicken.MAX_HUNGER_THIRST;
+        }
+
         // this.setAiState(ChickenAiStates.IDLING);
         this.setAiState(ChickenAiStates.START_WANDERING);
 
@@ -58,7 +63,7 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
             y: -6
         };
         this.bubbleImage = this.scene.add.image(this.x + this.bubbleOffest.x, this.y + this.bubbleOffest.y, 'game', 'ui/bubble_hunger').setOrigin(0.5, 1)
-            .setDepth(Depths.BUILD_ICON);
+            .setDepth(Depths.BUBBLE);
 
         // this.bubbleImage.setAlpha(0);
 

@@ -8,6 +8,7 @@ export default class Coin extends Image {
     private timer: Phaser.Time.TimerEvent;
     private clicked = false;
     private clickable = false;
+    private clickArea: Phaser.GameObjects.Arc;
 
     constructor (
         public scene: GameScene,
@@ -21,7 +22,6 @@ export default class Coin extends Image {
 
         this.setDepth(Depths.COINS);
 
-        this.setInteractive({ useHandCursor: true });
         this.shadow = this.scene.add.image(this.x, this.y + 2, 'game', 'coin2_shadow')
             .setOrigin(0.5, 0.5)
             .setDepth(Depths.COINS_SHADOW);
@@ -62,7 +62,12 @@ export default class Coin extends Image {
             }
         });
 
-        this.on('pointerdown', () => {
+
+        this.clickArea = this.scene.add.circle(this.x, this.y, 8, 0x000000, 0)
+            .setDepth(Depths.EGG_CLICK);
+
+        this.clickArea.setInteractive({ useHandCursor: true });
+        this.clickArea.on('pointerdown', () => {
             this.click();
         });
 
@@ -92,8 +97,9 @@ export default class Coin extends Image {
     }
 
     destroy (fromScene?: boolean) {
+        this.clickArea.destroy();
         this.timer.destroy();
-        this.scene.shop.sellEgg();
+        this.scene.shop.sellEgg(this.value);
         super.destroy(fromScene);
 
 
