@@ -23,11 +23,11 @@ export default class FeederManager {
             return;
         }
 
+        let price = this.shop.getFeederPrice(type);
+        this.shop.purchaseFeeder(price);
         let feeder = new Feeder(this.scene, x, y, type);
         this.feeders.add(feeder);
 
-        let price = this.shop.getFeederPrice(type);
-        this.shop.purchaseFeeder(price);
 
         this.scene.events.emit(Events.NEW_FEEDER_PURHCASED);
     }
@@ -45,9 +45,9 @@ export default class FeederManager {
 
             return;
         }
+        this.shop.purchaseFeeder(price);
 
         feeder.purchaseFill();
-        this.shop.purchaseFeeder(price);
     }
 
     purchaseFillForFeederMax (feeder: Feeder): void {
@@ -64,8 +64,8 @@ export default class FeederManager {
             return;
         }
 
-        feeder.purchaseFill(true);
         this.shop.purchaseFeeder(price);
+        feeder.purchaseFill(true);
     }
 
     getNearestFeederSlot (x: number, y: number, feederType: FeederType): {feeder: Feeder, slot: Vec2}|null {

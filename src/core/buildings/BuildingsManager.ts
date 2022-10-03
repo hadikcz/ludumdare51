@@ -23,10 +23,10 @@ export default class BuildingsManager {
             return;
         }
 
+        this.shop.purchaseChickenHouse();
         let chickenHouse = new ChickenHouse(this.scene, x, y);
         this.chickenHouses.add(chickenHouse);
 
-        this.shop.purchaseChickenHouse();
 
         this.scene.chickenManager.housePurchasedIncreaseLimit();
     }
@@ -36,11 +36,11 @@ export default class BuildingsManager {
             console.info('Can not purchase well, because coins');
             return;
         }
+        this.shop.purchaseWell();
 
         let well = new Well(this.scene, x, y);
         this.wells.add(well);
 
-        this.shop.purchaseWell();
         this.scene.events.emit(Events.NEW_WELL_PURCHASED);
     }
 
