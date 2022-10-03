@@ -29,7 +29,7 @@
     let lastChicken: AbstractChicken|null;
 
 
-    $: eggPrice = Chicken.BASIC_EGG_PRICE / (1 + age);
+    let eggPrice = Chicken.BASIC_EGG_PRICE;
 
 
     scene.events.on(Events.UI_CHICKEN_OPEN, (chicken: AbstractChicken) => {
@@ -38,6 +38,9 @@
         }
         lastChicken = chicken;
         age = chicken.getAge();
+
+        let ageNum = parseFloat(age);
+        eggPrice = Chicken.BASIC_EGG_PRICE / (1 + (ageNum / Chicken.AGE_MODIFIER));
         eggs = chicken.spawnedEggs;
 
         food = chicken.getFood();

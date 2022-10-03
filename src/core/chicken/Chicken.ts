@@ -9,6 +9,7 @@ export default class Chicken extends AbstractChicken {
 
 
     public static readonly BASIC_EGG_PRICE = 1.5;
+    public static readonly AGE_MODIFIER = 4;
     private typeOfChicken: ChickenTypes;
 
     constructor (public scene: GameScene, x: number, y: number, isHomeless: boolean = false, name: string, maxed = false) {
@@ -69,7 +70,7 @@ export default class Chicken extends AbstractChicken {
         }
 
         let age = parseFloat(this.getAge());
-        let value = 1 + age;
+        let value = 1 + (age / Chicken.AGE_MODIFIER);
 
         let realEggPrice = Chicken.BASIC_EGG_PRICE / value;
         console.log([
