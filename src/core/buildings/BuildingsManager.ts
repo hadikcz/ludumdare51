@@ -6,7 +6,7 @@ import ArrayHelpers from 'helpers/ArrayHelpers';
 import GameScene from 'scenes/GameScene';
 
 export default class BuildingsManager {
-    private chickenHouses: Phaser.GameObjects.Group;
+    public readonly chickenHouses: Phaser.GameObjects.Group;
     private wells: Phaser.GameObjects.Group;
 
     constructor (

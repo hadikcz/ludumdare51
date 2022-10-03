@@ -6,11 +6,11 @@ import GameScene from 'scenes/GameScene';
 
 export default class Shop {
 
-    public static readonly FEEDER_PRICE_FOOD = 2;
+    public static readonly FEEDER_PRICE_FOOD = 4;
+    public static readonly FEEDER_PRICE_WATER = 8;
     public static readonly FEEDER_FILL_PRICE_FOOD = 0.1;
     public static readonly FEEDER_FILL_PRICE_WATER = 0.2;
-    public static readonly FEEDER_PRICE_WATER = 4;
-    public static readonly CHICKEN_HOUSE_PRICE = 50;
+    public static readonly CHICKEN_HOUSE_PRICE = 35;
     public static readonly WELL_PRICE = 100;
     public coins$: Subject<number>;
     public coinsEarned = 0;
@@ -48,22 +48,29 @@ export default class Shop {
 
     getFeederPrice (type: FeederType): number {
         if (type === FeederType.FOOD) {
-            return Shop.FEEDER_PRICE_FOOD;
+            return Math.max(1, this.scene.feederManager.feeders.getChildren().length) * Shop.FEEDER_PRICE_FOOD;
         } else {
-            return Shop.FEEDER_PRICE_WATER;
+            return Math.max(1, this.scene.feederManager.feeders.getChildren().length) * Shop.FEEDER_PRICE_WATER;
         }
     }
 
     canPurchaseFeederFood (): boolean {
-        return this.coins >= Shop.FEEDER_PRICE_FOOD;
+        return this.coins >= this.getFeederPrice(FeederType.FOOD);
     }
 
     canPurchaseFeederWater (): boolean {
-        return this.coins >= Shop.FEEDER_PRICE_WATER;
+        return this.coins >= this.getFeederPrice(FeederType.DRINK);
     }
 
     canPurchaseChickenHouse (): boolean {
-        return this.coins >= Shop.CHICKEN_HOUSE_PRICE;
+        return this.coins >= this.getChickenHousePrice();
+    }
+
+    getChickenHousePrice (): number {
+        return Math.max(
+            Shop.CHICKEN_HOUSE_PRICE,
+            Shop.CHICKEN_HOUSE_PRICE * (this.scene.buildingManager.chickenHouses.getChildren().length + 1)
+        );
     }
 
     canPurhcaseWell (): boolean {
@@ -76,7 +83,7 @@ export default class Shop {
     }
 
     purchaseChickenHouse (): void {
-        this.coins -= Shop.CHICKEN_HOUSE_PRICE;
+        this.coins -= this.getChickenHousePrice();
         this.coins$.next(this.coins);
     }
 
