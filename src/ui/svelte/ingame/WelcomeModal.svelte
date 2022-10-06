@@ -92,7 +92,7 @@
         </ul>
         </div>
 
-        <div class="sprite modals-building_mode_bg play" on:click={play}>
+        <div class="sprite modals-building_mode_bg play" on:click|stopPropagation={play}>
             <div class="text-inside">PLAY</div>
         </div>
     </div>

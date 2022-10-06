@@ -32,7 +32,11 @@
     let eggPrice = Chicken.BASIC_EGG_PRICE;
 
 
+    scene.events.on(Events.CLOSE_ALL_MODALS, () => {
+        close();
+    });
     scene.events.on(Events.UI_CHICKEN_OPEN, (chicken: AbstractChicken) => {
+        scene.events.emit(Events.CLOSE_ALL_MODALS);
         if (lastAmountSubscriber) {
             lastAmountSubscriber.unsubscribe();
         }
@@ -188,7 +192,7 @@
 
 {#if visible}
     <div class="well-modal" style="left: {x}px; top: {y}px;">
-        <div class="sprite modals-feeder-close_button close" on:click={close}></div>
+        <div class="sprite modals-feeder-close_button close" on:click|stopPropagation={close}></div>
         <div class="sprite modals-well-bg bg"></div>
         <div class="inside">
             <div class="title">
@@ -228,7 +232,7 @@
 
             <div class="note">Not refresing</div>
 
-            <div class="button-wrapper tooltip destroyWrapper" on:click={tryDestroy}>
+            <div class="button-wrapper tooltip destroyWrapper" on:click|stopPropagation={tryDestroy}>
                 <div class="button sprite modals-feeder-destroy_button"></div>
                 <span class="tooltiptext">
                     Kill chicken

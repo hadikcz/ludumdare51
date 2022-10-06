@@ -51,6 +51,7 @@ export default class GameScene extends Phaser.Scene {
         window.scene = this;
         this.debugPathLines = this.add.group();
         this.initDebugUI();
+        this.input.setTopOnly(true);
 
         this.worldEnv = new WorldEnv(this);
         this.matrixWorld = new MatrixWorld(this, this.debugGui);
@@ -86,6 +87,7 @@ export default class GameScene extends Phaser.Scene {
         this.events.on(Events.WELCOME_CLOSED, () => {
             this.scene.resume();
         });
+
 
     }
 

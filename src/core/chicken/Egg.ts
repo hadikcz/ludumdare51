@@ -53,6 +53,9 @@ export default class Egg extends Phaser.GameObjects.Image {
         this.clickArea.setInteractive({ useHandCursor: true });
 
         this.clickArea.on('pointerdown', () => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             new Coin(this.scene, this.x, this.y, this.value);
             // this.scene.shop.sellEgg();
             this.destroyed = true;

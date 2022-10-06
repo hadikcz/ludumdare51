@@ -68,11 +68,14 @@ export default class Coin extends Image {
 
         this.clickArea.setInteractive({ useHandCursor: true });
         this.clickArea.on('pointerdown', () => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             this.click();
         });
 
         this.timer = this.scene.time.addEvent({
-            delay: 15000,
+            delay: 1500,
             callbackScope: this,
             callback: () => {
                 this.click();

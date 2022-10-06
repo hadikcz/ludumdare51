@@ -103,6 +103,9 @@ export default class AbstractChicken extends Phaser.GameObjects.Container {
         this.image.setInteractive({ useHandCursor: true });
 
         this.image.on('pointerdown', () => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             this.scene.events.emit(Events.UI_CHICKEN_OPEN, this);
         });
     }

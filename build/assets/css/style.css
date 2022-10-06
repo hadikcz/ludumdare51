@@ -89,3 +89,8 @@ body {
     right: -168%;
 }
 
+.tooltip.left:hover .tooltiptext {
+    right: 0!important;
+
+}
+

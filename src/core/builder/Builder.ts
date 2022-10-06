@@ -23,6 +23,9 @@ export default class Builder {
             .setDepth(Depths.BUILD_ICON).setVisible(false);
 
         this.scene.input.on('pointerdown', (pointer, obj) => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             if (!this.isBuildMode()) return;
             this.finishBuilding(pointer.worldX, pointer.worldY);
         });

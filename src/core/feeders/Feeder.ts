@@ -47,6 +47,9 @@ export default class Feeder extends Phaser.GameObjects.Image implements IBuildin
         this.setInteractive({ useHandCursor: true });
 
         this.clickArea.on('pointerdown', () => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             this.scene.events.emit(Events.UI_FEEDER_OPEN, this);
         });
     }

@@ -71,7 +71,7 @@
         <div class="sprite modals-building_mode_bg">
             <div class="buildingInfo">
                 Place building <span id="buildingName"></span>
-                <div class="sprite modals-feeder-destroy_button cancelIcon" on:click={handleCancel}></div>
+                <div class="sprite modals-feeder-destroy_button cancelIcon" on:click|stopPropagation={handleCancel}></div>
             </div>
 
         </div>

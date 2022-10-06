@@ -42,6 +42,9 @@ export default class Well extends Image {
         this.setInteractive({ useHandCursor: true });
 
         this.on('pointerdown', () => {
+            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+                return;
+            }
             this.scene.events.emit(Events.UI_WELL_OPEN, this);
         });
     }

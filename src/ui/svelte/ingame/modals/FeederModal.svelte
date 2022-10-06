@@ -36,7 +36,11 @@
     scene.events.on(Events.UI_WELL_OPEN, () => {
         close();
     })
+    scene.events.on(Events.CLOSE_ALL_MODALS, () => {
+       close();
+    });
     scene.events.on(Events.UI_FEEDER_OPEN, (feeder: Feeder) => {
+        scene.events.emit(Events.CLOSE_ALL_MODALS);
         if (lastAmountSubscriber) {
             lastAmountSubscriber.unsubscribe();
         }
@@ -214,7 +218,7 @@
 
 {#if visible}
     <div class="feeder-modal" style="left: {x}px; top: {y}px;">
-        <div class="sprite modals-feeder-close_button close" on:click={close}></div>
+        <div class="sprite modals-feeder-close_button close" on:click|stopPropagation={close}></div>
         <div class="sprite modals-feeder-bg bg"></div>
         <div class="inside">
             <div class="title">
@@ -232,7 +236,7 @@
             </div>
 
             <div class="buttons-row">
-                <div class="button-wrapper tooltip" on:click={purchaseOnePiece}>
+                <div class="button-wrapper tooltip" on:click|stopPropagation={purchaseOnePiece}>
                     <div class="button sprite modals-feeder-plus_one_button"></div>
                     <span class="tooltiptext">
                         Purchase one bag of meal<br>
@@ -246,7 +250,7 @@
                 </div>
 
 
-                <div class="button-wrapper tooltip"  on:click={purchaseMax}>
+                <div class="button-wrapper tooltip"  on:click|stopPropagation={purchaseMax}>
                     <div class="button sprite modals-feeder-max_button"></div>
                     <span class="tooltiptext">
                         Fill up with food<br>
@@ -261,7 +265,7 @@
 
 
                 {#if waterAviaible}
-                <div class="button-wrapper tooltip" on:click={tryWellFill}>
+                <div class="button-wrapper tooltip" on:click|stopPropagation={tryWellFill}>
                     <div class="button sprite modals-feeder-well_button"></div>
                     <span class="tooltiptext">
                         Fill up from well<br>
@@ -275,7 +279,7 @@
                 {/if}
 
 
-                <div class="button-wrapper tooltip" on:click={tryDestroy}>
+                <div class="button-wrapper tooltip" on:click|stopPropagation={tryDestroy}>
                     <div class="button sprite modals-feeder-destroy_button"></div>
                     <span class="tooltiptext">
                         Destroy
