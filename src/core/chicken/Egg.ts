@@ -53,13 +53,7 @@ export default class Egg extends Phaser.GameObjects.Image {
         this.clickArea.setInteractive({ useHandCursor: true });
 
         this.clickArea.on('pointerdown', () => {
-            if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
-                return;
-            }
-            new Coin(this.scene, this.x, this.y, this.value);
-            // this.scene.shop.sellEgg();
-            this.destroyed = true;
-            this.destroy(true);
+            this.pop();
 
             // this.scene.add.tween({
             //     targets: this,
@@ -69,6 +63,16 @@ export default class Egg extends Phaser.GameObjects.Image {
             //     }
             // });
         });
+    }
+
+    private pop (): void {
+        if (this.scene.input.activePointer.downElement.localName !== 'canvas') {
+            return;
+        }
+        new Coin(this.scene, this.x, this.y, this.value);
+        // this.scene.shop.sellEgg();
+        this.destroyed = true;
+        this.destroy(true);
     }
 
     preUpdate (): void {
@@ -81,6 +85,10 @@ export default class Egg extends Phaser.GameObjects.Image {
             this.y
         ) <= 8) {
             this.setFrame('egg_selection');
+
+            if (this.scene.input.activePointer.leftButtonDown()) {
+                this.pop();
+            }
         } else {
             this.setFrame('egg');
         }
